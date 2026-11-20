@@ -197,24 +197,29 @@ nav{display:flex;align-items:center;justify-content:space-between;gap:24px;width
 .hero{padding:calc(var(--header-h) + 56px) 0 88px;position:relative;overflow-x:clip;}
 
 /* Papierflieger */
+/* Nur transform/opacity werden animiert → läuft auf der GPU, kein Neuzeichnen pro Frame */
 .plane{
   position:absolute;left:0;top:0;z-index:6;
-  width:52px;height:52px;margin:-26px 0 0 -26px;
+  width:56px;height:56px;margin:-28px 0 0 -28px;
   opacity:0;cursor:pointer;border-radius:50%;
+  will-change:transform;
   -webkit-tap-highlight-color:transparent;
-  filter:drop-shadow(0 6px 6px rgba(28,26,23,.22));
 }
 .plane.ready{opacity:1;}
+.plane .bob{display:block;width:100%;height:100%;}
 .plane svg{width:100%;height:100%;overflow:visible;}
-.plane .bob{transform-origin:50% 50%;}
-.plane.resting .bob{animation:planeBob 2.8s ease-in-out infinite;}
-@keyframes planeBob{0%,100%{transform:translateY(0) rotate(0);}50%{transform:translateY(-4px) rotate(-3deg);}}
+.plane.resting .bob{animation:planeBob 3s ease-in-out infinite;}
+@keyframes planeBob{0%,100%{transform:translateY(0) rotate(0);}50%{transform:translateY(-4px) rotate(-4deg);}}
 .plane-trail{
-  position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:5;
-  transition:opacity 1.2s var(--ease);
+  position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:5;
+  opacity:0;transition:opacity 1s var(--ease);
 }
-.plane-trail path{fill:none;stroke:var(--accent);stroke-width:1.6;stroke-dasharray:3 7;stroke-linecap:round;opacity:.55;}
-.plane-trail.fade{opacity:0;}
+.plane-trail.show{opacity:1;transition:none;}
+.plane-trail .t{fill:none;stroke:var(--accent);stroke-width:1.5;stroke-dasharray:2 8;stroke-linecap:round;opacity:.6;}
+.plane-trail .m{fill:none;stroke:#fff;stroke-width:8;stroke-linecap:round;}
+/* kleiner Schubs, wenn der Flieger auf dem Porträt landet */
+.frame-2.bump{animation:frameBump .6s var(--ease);}
+@keyframes frameBump{0%,100%{transform:rotate(2.5deg);}35%{transform:rotate(4.5deg) translateY(2px);}70%{transform:rotate(1.5deg);}}
 .plane-hint{
   position:absolute;z-index:6;pointer-events:none;
   font-family:'Fraunces',serif;font-style:italic;font-size:.85rem;color:var(--ink-soft);white-space:nowrap;
@@ -596,6 +601,22 @@ footer .logo{margin-bottom:16px;}
 <main>
 <!-- ================= HERO ================= -->
 <section class="hero" id="home">
+  <!-- Papierflieger aus einem Brief: kommt von oben links, dreht einen Looping und landet auf dem Porträt -->
+  <svg class="plane-trail" id="planeTrail" aria-hidden="true">
+    <defs><mask id="trailMask" maskUnits="userSpaceOnUse" x="-200" y="-200" width="4000" height="4000"><path class="m"/></mask></defs>
+    <path class="t" mask="url(#trailMask)"/>
+  </svg>
+  <button class="plane" id="plane" type="button" aria-label="Papierflieger noch einmal fliegen lassen">
+    <span class="bob">
+      <svg viewBox="0 0 52 52" aria-hidden="true">
+        <path d="M3 17 L49 26 L19 28 Z" fill="#fffaf2" stroke="#1c1a17" stroke-width="1.3" stroke-linejoin="round"/>
+        <path d="M19 28 L49 26 L13 39 Z" fill="#efe3d0" stroke="#1c1a17" stroke-width="1.3" stroke-linejoin="round"/>
+        <path d="M19 28 L13 39 L22 31 Z" fill="#dccbb2" stroke="#1c1a17" stroke-width="1.1" stroke-linejoin="round"/>
+        <path d="M12 20.5 L27 23.4 M11 23.2 L22 25.3" stroke="#c4552d" stroke-width="1.1" stroke-linecap="round"/>
+      </svg>
+    </span>
+  </button>
+  <span class="plane-hint" id="planeHint" aria-hidden="true">nochmal?</span>
   <div class="container hero-grid">
     <div class="hero-copy">
       <span class="eyebrow">Kunst auf Anfrage</span>
@@ -661,20 +682,6 @@ footer .logo{margin-bottom:16px;}
         <span class="frame-tag">Kalligrafie</span>
       </div>
       <div class="hero-badge" aria-hidden="true"><span><strong>1:1</strong>Unikat</span></div>
-
-      <!-- Papierflieger aus einem Brief: fliegt beim Laden eine Runde, danach per Hover/Tipp erneut -->
-      <svg class="plane-trail" id="planeTrail" aria-hidden="true"><path d=""/></svg>
-      <button class="plane" id="plane" type="button" aria-label="Papierflieger noch einmal fliegen lassen">
-        <svg viewBox="0 0 52 52" aria-hidden="true">
-          <g class="bob">
-            <path d="M3 17 L49 26 L19 28 Z" fill="#fffaf2" stroke="#1c1a17" stroke-width="1.3" stroke-linejoin="round"/>
-            <path d="M19 28 L49 26 L13 39 Z" fill="#efe3d0" stroke="#1c1a17" stroke-width="1.3" stroke-linejoin="round"/>
-            <path d="M19 28 L13 39 L22 31 Z" fill="#dccbb2" stroke="#1c1a17" stroke-width="1.1" stroke-linejoin="round"/>
-            <path d="M12 20.5 L27 23.4 M11 23.2 L22 25.3" stroke="#c4552d" stroke-width="1.1" stroke-linecap="round"/>
-          </g>
-        </svg>
-      </button>
-      <span class="plane-hint" id="planeHint" aria-hidden="true">nochmal?</span>
     </div>
   </div>
 </section>
@@ -962,93 +969,153 @@ footer .logo{margin-bottom:16px;}
   sysDark.addEventListener('change', () => { if(!root.dataset.theme) applyTheme(); });
   applyTheme();
 
-  /* Papierflieger: steigt auf, dreht eine Runde um die Bilder und landet auf dem Gemälde */
+  /* Papierflieger: kommt von oben links, gleitet in einer Welle nach rechts,
+     dreht einen kleinen Looping und landet auf dem Porträt.
+     Die Route wird einmal berechnet und als Web Animation abgespielt
+     (nur transform → GPU, kein JavaScript pro Frame). */
   (function(){
-    const collage = $('#collage'), plane = $('#plane'), trail = $('#planeTrail'), hint = $('#planeHint');
-    const trailPath = $('path', trail);
-    // Flugroute in Prozent der Collage (x, y) als kubische Kurven – darf über den Rand hinausgehen
-    const route = [
-      [[-34,112],[-14,84],[2,44],[24,22]],
-      [[24,22],[40,6],[68,-12],[86,4]],
-      [[86,4],[104,20],[106,52],[92,68]],
-      [[92,68],[76,84],[50,98],[30,86]],
-      [[30,86],[2,74],[-4,32],[16,12]],
-      [[16,12],[24,4],[32,1],[42,1]]
-    ];
+    const hero = $('#home'), plane = $('#plane'), trail = $('#planeTrail'), hint = $('#planeHint');
+    const frame2 = $('.frame-2'), collage = $('#collage');
+    const trailT = $('.t', trail), trailM = $('.m', trail);
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const canHover = window.matchMedia('(hover: hover)').matches;
-    let samples = [], flying = false, landed = false, hinted = false;
+    let flying = false, landed = false, hinted = false, restPt = null;
 
-    const bez = (a,b,c,d,t) => { const u = 1 - t; return u*u*u*a + 3*u*u*t*b + 3*u*t*t*c + t*t*t*d; };
-    function build(){
-      const W = collage.clientWidth, H = collage.clientHeight;
-      samples = []; let prev = null, len = 0;
-      route.forEach(([p0,p1,p2,p3], si) => {
-        for(let i = si ? 1 : 0; i <= 60; i++){
-          const t = i / 60;
-          const x = bez(p0[0],p1[0],p2[0],p3[0],t) / 100 * W;
-          const y = bez(p0[1],p1[1],p2[1],p3[1],t) / 100 * H;
-          if(prev) len += Math.hypot(x - prev.x, y - prev.y);
-          prev = {x, y, len}; samples.push(prev);
+    // Position relativ zur Hero-Sektion
+    function rel(el){
+      const h = hero.getBoundingClientRect(), r = el.getBoundingClientRect();
+      return {x: r.left - h.left, y: r.top - h.top, w: r.width, h: r.height};
+    }
+    function target(){
+      const f = rel(frame2);
+      return {x: f.x + f.w * .62, y: f.y - 4};
+    }
+
+    const cubic = (p0, p1, p2, p3) => t => {
+      const u = 1 - t;
+      return {
+        x: u*u*u*p0.x + 3*u*u*t*p1.x + 3*u*t*t*p2.x + t*t*t*p3.x,
+        y: u*u*u*p0.y + 3*u*u*t*p1.y + 3*u*t*t*p2.y + t*t*t*p3.y
+      };
+    };
+    // Looping: Kreis, der unten beginnt, nach oben steigt, rückwärts kippt und wieder unten endet
+    const loop = (c, r) => t => {
+      const a = Math.PI / 2 - t * Math.PI * 2;
+      return {x: c.x + Math.cos(a) * r, y: c.y + Math.sin(a) * r};
+    };
+
+    // Route aus Teilstücken zusammensetzen und gleichmäßig abtasten
+    function sample(parts){
+      const pts = [];
+      parts.forEach((fn, i) => { for(let k = i ? 1 : 0; k <= 48; k++) pts.push(fn(k / 48)); });
+      let len = 0; pts[0].len = 0;
+      for(let i = 1; i < pts.length; i++){ len += Math.hypot(pts[i].x - pts[i-1].x, pts[i].y - pts[i-1].y); pts[i].len = len; }
+      return pts;
+    }
+    function introRoute(){
+      const T = target(), W = hero.clientWidth;
+      const mobile = W < 960;
+      const r = mobile ? 30 : 40;
+      const S = {x: -70, y: mobile ? Math.max(20, T.y - 240) : Math.max(24, T.y - 70)};
+      const L = {x: T.x - (mobile ? 110 : 190), y: T.y + (mobile ? 70 : 60)}; // unterster Punkt des Loopings
+      const dx = L.x - S.x;
+      return sample([
+        cubic(S, {x: S.x + dx * .35, y: S.y + 90}, {x: S.x + dx * .7, y: L.y - 70}, L),   // Gleitflug mit Welle
+        loop({x: L.x, y: L.y - r}, r),                                                    // Looping
+        cubic(L, {x: L.x + 60, y: L.y}, {x: T.x - 50, y: T.y - 26}, T)                     // Landeanflug
+      ]);
+    }
+    function hopRoute(){
+      const T = target(), r = 26;
+      const L = {x: T.x + 40, y: T.y - 40};
+      return sample([
+        cubic(T, {x: T.x + 10, y: T.y - 30}, {x: L.x - 30, y: L.y + 2}, L),
+        loop({x: L.x, y: L.y - r}, r),
+        cubic(L, {x: L.x + 40, y: L.y + 4}, {x: T.x + 70, y: T.y - 60}, {x: T.x + 40, y: T.y - 70}),
+        cubic({x: T.x + 40, y: T.y - 70}, {x: T.x + 10, y: T.y - 80}, {x: T.x - 50, y: T.y - 30}, T)
+      ]);
+    }
+
+    function angleAt(pts, i){
+      const p = pts[Math.max(0, i - 2)], n = pts[Math.min(pts.length - 1, i + 2)];
+      return Math.atan2(n.y - p.y, n.x - p.x) * 180 / Math.PI;
+    }
+    const tf = (x, y, a) => `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) rotate(${a.toFixed(1)}deg)`;
+
+    // Keyframes nach Bogenlänge verteilen → gleichmäßige Geschwindigkeit; Winkel ohne Sprünge (Looping!)
+    function keyframes(pts){
+      const total = pts[pts.length - 1].len, frames = [];
+      let prev = null, unwrap = 0;
+      pts.forEach((p, i) => {
+        if(i % 2 && i !== pts.length - 1) return;
+        let a = angleAt(pts, i);
+        if(prev !== null){
+          while(a + unwrap - prev > 180) unwrap -= 360;
+          while(a + unwrap - prev < -180) unwrap += 360;
         }
+        a += unwrap; prev = a;
+        frames.push({transform: tf(p.x, p.y, a), offset: p.len / total});
       });
+      return {frames, last: frames[frames.length - 1], end: pts[pts.length - 1], angle: prev};
     }
-    function at(d){
-      let lo = 0, hi = samples.length - 1;
-      while(lo < hi){ const m = (lo + hi) >> 1; if(samples[m].len < d) lo = m + 1; else hi = m; }
-      const s = samples[lo], p = samples[Math.max(0, lo - 2)], n = samples[Math.min(samples.length - 1, lo + 2)];
-      return {x: s.x, y: s.y, a: Math.atan2(n.y - p.y, n.x - p.x) * 180 / Math.PI};
-    }
-    const place = pt => { plane.style.transform = `translate(${pt.x}px,${pt.y}px) rotate(${pt.a}deg)`; };
-    const ease = t => -(Math.cos(Math.PI * t) - 1) / 2;
 
     function rest(){
-      build();
-      const end = at(samples[samples.length - 1].len);
-      place(end);
-      hint.style.left = (end.x + 30) + 'px';
-      hint.style.top = (end.y - 34) + 'px';
+      const T = target();
+      restPt = T;
+      plane.style.transform = tf(T.x, T.y, -4);
+      hint.style.left = (T.x + 30) + 'px';
+      hint.style.top = (T.y - 38) + 'px';
     }
-    function land(){
-      flying = false; landed = true;
-      plane.classList.add('resting');
-      trail.classList.add('fade');
-      rest();
-      if(!hinted){
-        hinted = true;
-        hint.classList.add('show');
-        setTimeout(() => hint.classList.remove('show'), 3200);
-      }
+
+    function drawTrail(pts, dur){
+      const d = 'M' + pts.map(p => p.x.toFixed(1) + ' ' + p.y.toFixed(1)).join(' L');
+      trailT.setAttribute('d', d); trailM.setAttribute('d', d);
+      const len = pts[pts.length - 1].len;
+      trailM.style.strokeDasharray = len;
+      trail.classList.add('show');
+      trailM.animate([{strokeDashoffset: len}, {strokeDashoffset: 0}], {duration: dur, easing: 'cubic-bezier(.45,.05,.35,1)', fill: 'forwards'});
     }
-    function fly(){
+
+    function fly(kind){
       if(flying || reduce) return;
       flying = true; landed = false;
-      build();
+      const pts = kind === 'hop' ? hopRoute() : introRoute();
+      const k = keyframes(pts);
+      const dur = kind === 'hop' ? 1500 : Math.min(2900, Math.max(2000, pts[pts.length - 1].len * 1.9));
       plane.classList.remove('resting');
       plane.classList.add('ready');
       hint.classList.remove('show');
-      trail.classList.remove('fade');
-      const total = samples[samples.length - 1].len;
-      const dur = Math.min(5200, Math.max(3600, total * 2.6));
-      const pts = []; let start = null;
-      function frame(ts){
-        if(start === null) start = ts;
-        const k = Math.min(1, (ts - start) / dur);
-        const pt = at(ease(k) * total);
-        place(pt);
-        pts.push(pt.x.toFixed(1) + ' ' + pt.y.toFixed(1));
-        trailPath.setAttribute('d', 'M' + pts.join(' L'));
-        if(k < 1) requestAnimationFrame(frame); else land();
+      drawTrail(pts, dur);
+      const anim = plane.animate(k.frames, {duration: dur, easing: 'cubic-bezier(.45,.05,.35,1)', fill: 'forwards'});
+      anim.onfinish = () => {
+        // Ausrollen in die Ruhelage
+        plane.style.transform = k.last.transform;
+        anim.cancel();
+        const T = target();
+        const settle = plane.animate([{transform: k.last.transform}, {transform: tf(T.x, T.y, -4)}], {duration: 260, easing: 'ease-out'});
+        settle.onfinish = () => { rest(); land(); };
+        rest();
+      };
+    }
+
+    function land(){
+      flying = false; landed = true;
+      plane.classList.add('resting');
+      trail.classList.remove('show');
+      frame2.classList.remove('bump'); void frame2.offsetWidth; frame2.classList.add('bump');
+      if(!hinted){
+        hinted = true;
+        hint.classList.add('show');
+        setTimeout(() => hint.classList.remove('show'), 3000);
       }
-      requestAnimationFrame(frame);
     }
 
     if(reduce){ rest(); plane.classList.add('ready', 'resting'); landed = true; return; }
-    plane.addEventListener('click', fly);
-    if(canHover) plane.addEventListener('mouseenter', () => { if(landed) fly(); });
+    plane.addEventListener('click', () => fly('hop'));
+    if(canHover) plane.addEventListener('mouseenter', () => { if(landed) fly('hop'); });
     window.addEventListener('resize', () => { if(landed) rest(); });
     const startIO = new IntersectionObserver(entries => {
-      if(entries[0].isIntersecting){ startIO.disconnect(); setTimeout(fly, 700); }
+      if(entries[0].isIntersecting){ startIO.disconnect(); setTimeout(() => fly('intro'), 1100); }
     }, {threshold: .35});
     startIO.observe(collage);
   })();
