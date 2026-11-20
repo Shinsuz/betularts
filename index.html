@@ -3,496 +3,528 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>betuelarts – Islamische Kalligraphie & Auftragskunst</title>
-<meta name="description" content="Handgefertigte islamische Kalligraphie als Unikat – entdecke die Galerie oder gib dein persönliches Wandbild bei betuelarts in Auftrag.">
-<meta name="theme-color" content="#faf7f1">
+<title>artsbybn – Kunstwerke auf Anfrage</title>
+<meta name="description" content="artsbybn – handgemachte Kunst auf Anfrage: Gemälde, Porträts, Kalligrafie, Illustrationen und Wandbilder. Beschreibe deine Idee und erhalte ein persönliches Angebot.">
+<meta name="theme-color" content="#f6f2ec">
+<script>
+/* Theme vor dem ersten Zeichnen setzen, damit nichts aufblitzt */
+(function(){
+  var saved = null;
+  try { saved = localStorage.getItem('artsbybn-theme'); } catch(e) {}
+  var root = document.documentElement;
+  if(saved === 'light' || saved === 'dark') root.setAttribute('data-theme', saved);
+  var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+  root.setAttribute('data-theme-active', dark ? 'dark' : 'light');
+})();
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Jost:wght@300;400;500;600&family=Aref+Ruqaa:wght@400;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --ivory:#faf7f1;
-  --ivory-2:#f3eee3;
-  --line:#e6dfce;
-  --gold:#b8924f;
-  --gold-dark:#8a6c34;
-  --gold-light:#dcc38d;
-  --ink:#1f1d19;
-  --ink-soft:#67624f;
-  --white:#fff;
-  --radius:4px;
+  --paper:#f6f2ec;
+  --paper-2:#ede6da;
+  --surface:#fffdf9;
+  --line:#e2d9ca;
+  --line-strong:#cfc3b0;
+  --ink:#1c1a17;
+  --ink-soft:#5f584d;
+  --ink-mute:#8a8274;
+  --accent:#c4552d;
+  --accent-dark:#9e3f1d;
+  --accent-soft:#f4ddd0;
+  --ochre:#d9a441;
+  --sage:#7f8f6c;
+  --indigo:#2f4766;
+  --radius:10px;
+  --radius-sm:6px;
   --ease:cubic-bezier(.22,.7,.2,1);
-  --header-h:76px;
+  --header-h:72px;
+  --shadow:0 1px 2px rgba(28,26,23,.04),0 12px 32px -12px rgba(28,26,23,.16);
+  --header-bg:rgba(246,242,236,.88);
+  --band:#1c1a17;          /* dunkle Flächen (Ablauf, Footer) */
+  --band-line:#3a362f;
+  --on-accent:#fff;
+  --select-arrow:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%235f584d' stroke-width='1.5'/%3E%3C/svg%3E");
+  color-scheme:light;
+}
+/* Dunkles Farbschema – folgt dem System, außer der Nutzer hat selbst gewählt */
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#151412;--paper-2:#24211d;--surface:#1d1b18;
+    --line:#312d27;--line-strong:#4a453c;
+    --ink:#f1ece3;--ink-soft:#bcb4a6;--ink-mute:#8f8779;
+    --accent:#e2744c;--accent-dark:#f0916c;--accent-soft:#3b2419;
+    --indigo:#6584ad;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 16px 40px -14px rgba(0,0,0,.6);
+    --header-bg:rgba(21,20,18,.86);
+    --band:#0d0c0b;--band-line:#2b2823;
+    --on-accent:#1c1a17;
+    --select-arrow:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23bcb4a6' stroke-width='1.5'/%3E%3C/svg%3E");
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#151412;--paper-2:#24211d;--surface:#1d1b18;
+  --line:#312d27;--line-strong:#4a453c;
+  --ink:#f1ece3;--ink-soft:#bcb4a6;--ink-mute:#8f8779;
+  --accent:#e2744c;--accent-dark:#f0916c;--accent-soft:#3b2419;
+  --indigo:#6584ad;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 16px 40px -14px rgba(0,0,0,.6);
+  --header-bg:rgba(21,20,18,.86);
+  --band:#0d0c0b;--band-line:#2b2823;
+  --on-accent:#1c1a17;
+  --select-arrow:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23bcb4a6' stroke-width='1.5'/%3E%3C/svg%3E");
+  color-scheme:dark;
+}
+body,header::before,.form-card,.quickstart,.genres,.field input,.field select,.field textarea,.type-option label,.frame{
+  transition:background-color .3s var(--ease),border-color .3s var(--ease),color .3s var(--ease);
 }
 
+/* Theme-Schalter */
+.theme-toggle{
+  width:42px;height:42px;border-radius:50%;
+  display:grid;place-items:center;
+  border:1px solid var(--line-strong);color:var(--ink);
+  transition:border-color .2s,background .2s;
+}
+.theme-toggle:hover{border-color:var(--ink);}
+.theme-toggle svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.theme-toggle .i-sun{display:none;}
+:root[data-theme-active="dark"] .theme-toggle .i-sun{display:block;}
+:root[data-theme-active="dark"] .theme-toggle .i-moon{display:none;}
+
 *{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;scroll-padding-top:80px;-webkit-text-size-adjust:100%;}
+html{scroll-behavior:smooth;scroll-padding-top:84px;-webkit-text-size-adjust:100%;}
 body{
-  font-family:'Jost',system-ui,sans-serif;
-  font-weight:400;
-  background:var(--ivory);
-  color:var(--ink);
-  line-height:1.6;
-  overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
+  font-family:'Manrope',system-ui,sans-serif;
+  font-size:16px;line-height:1.6;
+  background:var(--paper);color:var(--ink);
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
 }
 body.menu-open{overflow:hidden;}
-h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:600;line-height:1.15;}
+h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;font-weight:500;line-height:1.1;letter-spacing:-.015em;}
 a{color:inherit;text-decoration:none;}
 ul{list-style:none;}
 img,svg{max-width:100%;display:block;}
 button{font:inherit;border:0;background:none;cursor:pointer;color:inherit;}
-:focus-visible{outline:2px solid var(--gold-dark);outline-offset:3px;}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px;}
 
-.container{width:min(92%,1180px);margin:0 auto;}
-.container-wide{width:min(92%,1480px);margin:0 auto;}
-.center{text-align:center;}
+.container{width:min(100% - 32px,1200px);margin:0 auto;}
 
 .eyebrow{
-  display:inline-block;
-  font-size:.72rem;
-  font-weight:500;
-  letter-spacing:.28em;
-  text-transform:uppercase;
-  color:var(--gold-dark);
-  margin-bottom:14px;
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:.75rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--accent-dark);margin-bottom:16px;
 }
-.section-title{font-size:clamp(2rem,4.2vw,3rem);margin-bottom:16px;}
-.section-title em{color:var(--gold-dark);font-style:italic;font-weight:500;}
-.lead{color:var(--ink-soft);max-width:560px;margin-inline:auto;}
-.rule{
-  display:flex;align-items:center;justify-content:center;gap:14px;
-  margin:0 auto 22px;color:var(--gold);
-}
-.rule::before,.rule::after{content:'';width:56px;height:1px;background:var(--gold-light);}
-.rule svg{width:14px;height:14px;}
+.eyebrow::before{content:'';width:24px;height:1px;background:currentColor;}
+.section-title{font-size:clamp(2rem,4.4vw,3.2rem);margin-bottom:16px;}
+.section-title em{font-style:italic;color:var(--accent);}
+.lead{color:var(--ink-soft);font-size:1.05rem;max-width:560px;}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;margin-bottom:48px;}
 
 /* ---------- Buttons ---------- */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:10px;
-  padding:15px 34px;
-  font-size:.78rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;
-  border-radius:var(--radius);
-  border:1px solid transparent;
-  white-space:nowrap;
-  transition:background .35s var(--ease),color .35s var(--ease),border-color .35s var(--ease),transform .35s var(--ease);
+  min-height:48px;padding:0 26px;
+  font-size:.92rem;font-weight:600;
+  border-radius:999px;border:1px solid transparent;white-space:nowrap;
+  transition:background .25s var(--ease),color .25s var(--ease),border-color .25s var(--ease),transform .25s var(--ease);
 }
-.btn-primary{background:var(--ink);color:var(--ivory);}
-.btn-primary:hover{background:var(--gold-dark);transform:translateY(-2px);}
-.btn-outline{border-color:var(--ink);color:var(--ink);}
-.btn-outline:hover{background:var(--ink);color:var(--ivory);transform:translateY(-2px);}
-.btn-sm{padding:11px 22px;font-size:.72rem;}
+.btn svg{width:18px;height:18px;transition:transform .25s var(--ease);}
+.btn:hover svg{transform:translateX(3px);}
+.btn-primary{background:var(--ink);color:var(--paper);}
+.btn-primary:hover{background:var(--accent-dark);}
+.btn-accent{background:var(--accent);color:var(--on-accent);}
+.btn-accent:hover{background:var(--accent-dark);}
+.btn-ghost{border-color:var(--line-strong);color:var(--ink);}
+.btn-ghost:hover{border-color:var(--ink);}
+.btn-sm{min-height:42px;padding:0 20px;font-size:.86rem;}
+.btn-block{width:100%;}
 
 /* ---------- Header ---------- */
 header{
-  position:fixed;inset:0 0 auto 0;z-index:1000;
-  height:var(--header-h);
-  display:flex;align-items:center;
-  transition:height .4s var(--ease);
+  position:fixed;inset:0 0 auto 0;z-index:1000;height:var(--header-h);
+  display:flex;align-items:center;transition:height .3s var(--ease);
 }
-/* Hintergrund als Pseudo-Element: backdrop-filter am Header selbst würde das mobile Menü (position:fixed) verschieben */
 header::before{
   content:'';position:absolute;inset:0;z-index:-1;
-  background:rgba(250,247,241,.9);
-  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  background:var(--header-bg);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   border-bottom:1px solid var(--line);
-  opacity:0;transition:opacity .4s var(--ease);
+  opacity:0;transition:opacity .3s var(--ease);
 }
-header.scrolled{height:64px;}
+header.scrolled{height:62px;}
 header.scrolled::before{opacity:1;}
-
 nav{display:flex;align-items:center;justify-content:space-between;gap:24px;width:100%;}
 
-.logo-mark{display:flex;align-items:center;gap:12px;flex-shrink:0;}
-.logo-icon{width:38px;height:38px;color:var(--gold-dark);flex-shrink:0;transition:transform .8s var(--ease);}
-.logo-mark:hover .logo-icon{transform:rotate(45deg);}
-.logo-text{display:flex;flex-direction:column;line-height:1;}
-.logo-title{
-  font-family:'Cormorant Garamond',serif;
-  font-size:1.65rem;font-weight:700;letter-spacing:.02em;white-space:nowrap;
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.logo-mark{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--ink);color:var(--paper);
+  display:grid;place-items:center;
+  font-family:'Fraunces',serif;font-style:italic;font-size:1rem;font-weight:500;letter-spacing:-.02em;
+  transition:background .3s var(--ease);
 }
-.logo-title em{color:var(--gold-dark);font-style:italic;font-weight:600;}
-.logo-sub{
-  font-size:.56rem;letter-spacing:.34em;text-transform:uppercase;
-  color:var(--ink-soft);margin-top:5px;
-}
+.logo:hover .logo-mark{background:var(--accent);}
+.logo-word{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:500;letter-spacing:-.02em;white-space:nowrap;}
+.logo-word em{font-style:italic;color:var(--accent);font-weight:400;}
 
-.nav-links{display:flex;gap:38px;}
-.nav-links a{
-  font-size:.8rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
-  position:relative;padding:6px 0;
-}
-.nav-links a::after{
-  content:'';position:absolute;left:0;bottom:0;width:100%;height:1px;
-  background:var(--gold);transform:scaleX(0);transform-origin:left;
-  transition:transform .4s var(--ease);
-}
-.nav-links a:hover::after{transform:scaleX(1);}
+.nav-links{display:flex;gap:32px;}
+.nav-links a{font-size:.92rem;font-weight:500;color:var(--ink-soft);padding:6px 0;transition:color .2s;}
+.nav-links a:hover{color:var(--ink);}
 .nav-cta-mobile{display:none;}
-
-.nav-right{display:flex;align-items:center;gap:18px;}
+.nav-right{display:flex;align-items:center;gap:12px;}
 
 .burger{
-  display:none;width:44px;height:44px;
-  align-items:center;justify-content:center;flex-direction:column;gap:6px;
+  display:none;width:44px;height:44px;border-radius:50%;
+  align-items:center;justify-content:center;flex-direction:column;gap:5px;
   position:relative;z-index:1002;
 }
-.burger span{width:24px;height:1.5px;background:var(--ink);transition:transform .4s var(--ease),opacity .3s;}
-.burger.open span:nth-child(1){transform:translateY(7.5px) rotate(45deg);}
+.burger span{width:20px;height:1.5px;background:var(--ink);transition:transform .3s var(--ease),opacity .2s;}
+.burger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
 .burger.open span:nth-child(2){opacity:0;}
-.burger.open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
-
+.burger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
 .nav-overlay{
-  position:fixed;inset:0;background:rgba(31,29,25,.45);
-  opacity:0;visibility:hidden;transition:opacity .4s var(--ease),visibility .4s;
-  z-index:1000;
+  position:fixed;inset:0;background:rgba(28,26,23,.4);
+  opacity:0;visibility:hidden;transition:opacity .3s var(--ease),visibility .3s;z-index:1000;
 }
 .nav-overlay.show{opacity:1;visibility:visible;}
 
 /* ---------- Hero ---------- */
-.hero{
-  min-height:100svh;
-  display:flex;align-items:center;justify-content:center;
-  position:relative;text-align:center;
-  padding:calc(var(--header-h) + 40px) 0 110px;
-  background:var(--ivory);
-  overflow:hidden;
-}
-.hero::before{
-  content:'';position:absolute;inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='88' viewBox='0 0 88 88'%3E%3Cg fill='none' stroke='%23b8924f' stroke-width='.8'%3E%3Crect x='24' y='24' width='40' height='40'/%3E%3Crect x='24' y='24' width='40' height='40' transform='rotate(45 44 44)'/%3E%3C/g%3E%3C/svg%3E");
-  opacity:.22;
-  -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,transparent 25%,#000 100%);
-  mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,transparent 25%,#000 100%);
-}
-.hero-content{position:relative;max-width:780px;padding:0 20px;animation:fadeUp 1s var(--ease) both;}
-.hero h1{
-  font-size:clamp(2.6rem,7vw,5rem);
-  font-weight:500;letter-spacing:-.01em;margin-bottom:22px;
-}
-.hero h1 em{color:var(--gold-dark);font-style:italic;}
-.hero p{color:var(--ink-soft);font-size:1.05rem;max-width:560px;margin:0 auto 38px;}
-.hero-buttons{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
-.hero-meta{
-  display:flex;gap:34px;justify-content:center;flex-wrap:wrap;
-  margin-top:56px;padding-top:28px;border-top:1px solid var(--line);
-  font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);
-}
-.hero-meta span{display:inline-flex;align-items:center;gap:9px;}
-.hero-meta svg{width:14px;height:14px;color:var(--gold);}
+.hero{padding:calc(var(--header-h) + 56px) 0 88px;position:relative;}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center;}
+.hero h1{font-size:clamp(2.6rem,6.2vw,4.8rem);margin-bottom:24px;}
+.hero h1 em{font-style:italic;color:var(--accent);font-weight:400;}
+.hero-text{color:var(--ink-soft);font-size:1.1rem;max-width:520px;margin-bottom:32px;}
 
-@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:none;}}
+.quickstart{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:22px;box-shadow:var(--shadow);max-width:560px;
+}
+.quickstart-label{font-size:.82rem;font-weight:600;margin-bottom:14px;display:block;}
+.type-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;}
+.type-chip{
+  display:inline-flex;align-items:center;gap:8px;
+  min-height:40px;padding:0 16px;border-radius:999px;
+  border:1px solid var(--line);background:var(--paper);
+  font-size:.88rem;font-weight:500;
+  transition:border-color .2s,background .2s,color .2s;
+}
+.type-chip:hover{border-color:var(--ink);}
+.type-chip .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.quickstart-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.quickstart-foot small{color:var(--ink-mute);font-size:.82rem;}
 
-.reveal{opacity:0;transform:translateY(32px);transition:opacity .9s var(--ease),transform .9s var(--ease);}
+/* Hero-Collage */
+.collage{position:relative;aspect-ratio:1/1.02;max-width:560px;justify-self:end;width:100%;}
+.frame{
+  position:absolute;background:var(--surface);padding:12px;border-radius:4px;
+  box-shadow:0 2px 4px rgba(28,26,23,.06),0 24px 48px -18px rgba(28,26,23,.32);
+}
+.frame svg{width:100%;height:100%;border-radius:2px;}
+.frame-1{width:58%;aspect-ratio:4/5;left:0;top:4%;transform:rotate(-3deg);z-index:2;}
+.frame-2{width:46%;aspect-ratio:1/1;right:0;top:0;transform:rotate(2.5deg);z-index:1;}
+.frame-3{width:50%;aspect-ratio:5/4;right:4%;bottom:0;transform:rotate(-1.5deg);z-index:3;}
+.frame-tag{
+  position:absolute;left:12px;top:-14px;
+  background:var(--ink);color:var(--paper);
+  font-size:.72rem;font-weight:600;letter-spacing:.04em;
+  padding:6px 12px;border-radius:999px;
+}
+.hero-badge{
+  position:absolute;left:6%;bottom:6%;z-index:4;
+  background:var(--accent);color:var(--on-accent);border-radius:50%;
+  width:112px;height:112px;display:grid;place-items:center;text-align:center;
+  font-family:'Fraunces',serif;font-style:italic;font-size:1rem;line-height:1.15;
+  transform:rotate(-8deg);
+}
+.hero-badge strong{display:block;font-size:1.7rem;font-weight:500;}
+
+.trust{
+  display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:32px;
+  font-size:.86rem;color:var(--ink-soft);
+}
+.trust span{display:inline-flex;align-items:center;gap:8px;}
+.trust svg{width:16px;height:16px;color:var(--accent);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+.hero-copy{animation:fadeUp .8s var(--ease) both;}
+.collage{animation:fadeUp .9s .1s var(--ease) both;}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
 .reveal.active{opacity:1;transform:none;}
 
-/* ---------- Galerie ---------- */
-.gallery{padding:120px 0 110px;background:var(--white);border-top:1px solid var(--line);}
-.gallery-header{text-align:center;margin-bottom:46px;}
-
-.filter-tabs{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:34px;}
-.filter-tab{
-  padding:10px 22px;border-radius:999px;
-  border:1px solid var(--line);
-  font-size:.78rem;font-weight:500;letter-spacing:.1em;
-  transition:all .3s var(--ease);
+/* ---------- Was ich gestalte ---------- */
+.genres{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--surface);}
+.genres-row{display:grid;grid-template-columns:repeat(6,1fr);}
+.genre{
+  padding:26px 18px;border-right:1px solid var(--line);
+  display:flex;flex-direction:column;gap:6px;text-align:left;
+  transition:background .2s;
 }
-.filter-tab:hover{border-color:var(--gold);}
-.filter-tab.active{background:var(--ink);border-color:var(--ink);color:var(--ivory);}
-
-.gallery-toolbar{
-  display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;
-  padding:16px 0;margin-bottom:36px;
-  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-}
-.result-count{font-size:.82rem;color:var(--ink-soft);}
-.toolbar-group{display:flex;align-items:center;gap:14px;}
-.toolbar-label{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);}
-.view-icons{display:flex;gap:6px;}
-.view-btn{
-  width:36px;height:36px;border:1px solid var(--line);border-radius:var(--radius);
-  display:flex;align-items:center;justify-content:center;color:var(--ink-soft);
-  transition:all .3s var(--ease);
-}
-.view-btn svg{width:16px;height:16px;}
-.view-btn:hover{border-color:var(--gold);color:var(--ink);}
-.view-btn.active{background:var(--ink);border-color:var(--ink);color:var(--ivory);}
-.toolbar-select{
-  padding:9px 34px 9px 14px;border:1px solid var(--line);border-radius:var(--radius);
-  background:var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23671' stroke-width='1.2'/%3E%3C/svg%3E") no-repeat right 13px center;
-  appearance:none;-webkit-appearance:none;
-  font:inherit;font-size:.82rem;color:var(--ink);cursor:pointer;
-}
-
-.gallery-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:40px 28px;
-}
-.gallery-grid[data-view="large"]{grid-template-columns:repeat(2,1fr);}
-
-.art-card{position:relative;display:flex;flex-direction:column;}
-.art-card[hidden]{display:none;}
-
-.art-img-wrap{
-  position:relative;aspect-ratio:4/5;overflow:hidden;
-  border:1px solid var(--line);border-radius:var(--radius);
-  background:var(--ivory-2);
-}
-.art-canvas{
-  position:absolute;inset:0;
-  container-type:inline-size;
-  display:flex;align-items:center;justify-content:center;
-  transition:transform 1.2s var(--ease);
-}
-.art-card:hover .art-canvas{transform:scale(1.045);}
-
-.canvas-light{background:linear-gradient(160deg,#faf6ea,#efe6d1);}
-.canvas-dark{background:linear-gradient(160deg,#2b2823,#17150f);}
-.art-canvas::before{
-  content:'';position:absolute;inset:14px;
-  border:1px solid rgba(184,146,79,.45);pointer-events:none;
-}
-.canvas-dark::before{border-color:rgba(220,195,141,.35);}
-
-.calligraphy{
-  position:relative;z-index:1;text-align:center;padding:10%;
-  font-family:'Aref Ruqaa',serif;
-}
-.canvas-light .calligraphy{color:var(--ink);}
-.canvas-dark .calligraphy{color:var(--gold-light);}
-.cal-xl{font-size:30cqw;line-height:1.1;}
-.cal-lg{font-size:17cqw;line-height:1.35;}
-.cal-md{font-family:'Amiri',serif;font-size:8.6cqw;line-height:2.1;}
-.cal-sub{
-  display:block;font-family:'Jost',sans-serif;font-size:max(.62rem,3.2cqw);
-  letter-spacing:.32em;text-transform:uppercase;margin-top:10px;opacity:.6;
-}
-
-.card-top-row{
-  position:absolute;top:14px;left:14px;right:14px;z-index:5;
-  display:flex;justify-content:space-between;align-items:flex-start;
-}
-.art-badge{
-  background:var(--ink);color:var(--ivory);
-  font-size:.6rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
-  padding:6px 12px;border-radius:2px;
-}
-.art-badge.sale{background:var(--gold-dark);}
-.wishlist-btn{
-  width:34px;height:34px;border-radius:50%;
-  background:rgba(255,255,255,.92);
-  display:flex;align-items:center;justify-content:center;
-  transition:transform .3s var(--ease),background .3s;
-}
-.wishlist-btn svg{width:16px;height:16px;fill:none;stroke:var(--ink);stroke-width:1.5;transition:all .3s;}
-.wishlist-btn:hover{transform:scale(1.1);}
-.wishlist-btn.on svg{fill:var(--gold-dark);stroke:var(--gold-dark);}
-
-.quick-view{
-  position:absolute;inset:auto 0 0 0;z-index:4;
-  padding:16px;display:flex;justify-content:center;
-  transform:translateY(100%);transition:transform .5s var(--ease);
-}
-.art-card:hover .quick-view,.art-card:focus-within .quick-view{transform:none;}
-.qv-btn{
-  width:100%;text-align:center;
-  background:rgba(255,255,255,.96);color:var(--ink);
-  padding:12px;font-size:.7rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;
-  border-radius:var(--radius);
-  transition:background .3s,color .3s;
-}
-.qv-btn:hover{background:var(--ink);color:var(--ivory);}
-
-.art-details{padding:18px 2px 0;display:flex;flex-direction:column;flex:1;}
-.art-category{font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-dark);font-weight:500;}
-.art-details h3{font-size:1.45rem;margin:6px 0 12px;}
-.price-row{margin-top:auto;display:flex;align-items:baseline;gap:8px;}
-.price-label{font-size:.72rem;color:var(--ink-soft);}
-.price-old{font-size:.85rem;color:#a39d88;text-decoration:line-through;}
-.price-new{font-size:1.1rem;font-weight:500;}
-
-/* ---------- Ablauf ---------- */
-.process{padding:110px 0;background:var(--ivory);border-top:1px solid var(--line);}
-.process-grid{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
-  margin-top:64px;border:1px solid var(--line);border-radius:var(--radius);background:var(--white);
-}
-.process-step{padding:42px 30px;text-align:left;border-right:1px solid var(--line);transition:background .4s var(--ease);}
-.process-step:last-child{border-right:0;}
-.process-step:hover{background:var(--ivory-2);}
-.step-num{
-  font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:500;line-height:1;
-  color:var(--gold);margin-bottom:22px;
-}
-.process-step h4{font-size:1.35rem;margin-bottom:10px;}
-.process-step p{color:var(--ink-soft);font-size:.93rem;}
+.genre:last-child{border-right:0;}
+.genre:hover{background:var(--paper);}
+.genre .dot{width:10px;height:10px;border-radius:50%;margin-bottom:6px;}
+.genre strong{font-family:'Fraunces',serif;font-weight:500;font-size:1.15rem;}
+.genre span{font-size:.82rem;color:var(--ink-mute);}
 
 /* ---------- Anfrage ---------- */
-.request{padding:120px 0;background:var(--white);border-top:1px solid var(--line);}
-.request-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:80px;align-items:start;}
-.request-left{position:sticky;top:110px;}
-.request-left h2{font-size:clamp(2.2rem,4vw,3.1rem);margin-bottom:20px;}
-.request-left p{color:var(--ink-soft);margin-bottom:28px;}
-.feature-list li{
-  display:flex;gap:14px;align-items:flex-start;
+.request{padding:112px 0;}
+.request-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:72px;align-items:start;}
+.request-aside{position:sticky;top:104px;}
+.request-aside .lead{margin-bottom:28px;}
+.check-list li{
+  display:flex;gap:12px;align-items:flex-start;
   padding:14px 0;border-top:1px solid var(--line);font-size:.95rem;
 }
-.feature-list li:last-child{border-bottom:1px solid var(--line);}
-.feature-list svg{width:18px;height:18px;color:var(--gold-dark);flex-shrink:0;margin-top:3px;}
+.check-list li:last-child{border-bottom:1px solid var(--line);}
+.check-list svg{width:18px;height:18px;color:var(--accent);flex-shrink:0;margin-top:3px;}
+.aside-note{margin-top:28px;font-size:.9rem;color:var(--ink-soft);}
+.aside-note a{color:var(--accent-dark);font-weight:600;border-bottom:1px solid currentColor;}
 
-.form-box{
-  background:var(--ivory);border:1px solid var(--line);border-radius:var(--radius);
-  padding:clamp(24px,4vw,46px);
+.form-card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:clamp(22px,4vw,44px);box-shadow:var(--shadow);
 }
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-.form-group{margin-bottom:22px;}
-.form-group label{
-  display:block;margin-bottom:8px;
-  font-size:.7rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);
+.form-step{margin-bottom:32px;}
+.form-step:last-of-type{margin-bottom:24px;}
+.step-head{display:flex;align-items:baseline;gap:12px;margin-bottom:16px;}
+.step-head .num{
+  font-family:'Fraunces',serif;font-style:italic;color:var(--accent);font-size:1.1rem;
 }
-.form-group input,.form-group select,.form-group textarea{
-  width:100%;padding:13px 14px;
+.step-head h3{font-size:1.3rem;}
+
+.type-options{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.type-option{position:relative;}
+.type-option input{position:absolute;opacity:0;inset:0;cursor:pointer;}
+.type-option label{
+  display:flex;flex-direction:column;gap:4px;height:100%;
+  padding:14px;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--paper);
+  cursor:pointer;transition:border-color .2s,background .2s,box-shadow .2s;
+}
+.type-option label strong{font-size:.92rem;font-weight:600;display:flex;align-items:center;gap:8px;}
+.type-option label small{font-size:.78rem;color:var(--ink-mute);line-height:1.4;}
+.type-option .dot{width:8px;height:8px;border-radius:50%;}
+.type-option input:hover + label{border-color:var(--line-strong);}
+.type-option input:checked + label{border-color:var(--ink);background:var(--surface);box-shadow:inset 0 0 0 1px var(--ink);}
+.type-option input:focus-visible + label{outline:2px solid var(--accent);outline-offset:2px;}
+
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.field{margin-bottom:18px;}
+.field label,.field .label{display:block;margin-bottom:7px;font-size:.84rem;font-weight:600;}
+.field .opt{font-weight:400;color:var(--ink-mute);}
+.field input,.field select,.field textarea{
+  width:100%;min-height:48px;padding:12px 14px;
   font:inherit;font-size:.95rem;color:var(--ink);
-  background:var(--white);border:1px solid var(--line);border-radius:var(--radius);
-  transition:border-color .3s,box-shadow .3s;
+  background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius-sm);
+  transition:border-color .2s,box-shadow .2s;
 }
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{
-  outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(184,146,79,.16);
+.field select{
+  appearance:none;-webkit-appearance:none;padding-right:40px;cursor:pointer;
+  background:var(--surface) var(--select-arrow) no-repeat right 15px center;
 }
-.form-group textarea{resize:vertical;min-height:130px;}
-.form-group input[type=file]{padding:10px;font-size:.85rem;}
-.form-note{font-size:.78rem;color:var(--ink-soft);margin-bottom:20px;}
-.submit-btn{width:100%;}
-.hp{position:absolute;left:-9999px;opacity:0;height:0;width:0;}
+.field input:focus,.field select:focus,.field textarea:focus{
+  outline:none;border-color:var(--ink);box-shadow:0 0 0 3px rgba(196,85,45,.15);
+}
+.field textarea{resize:vertical;min-height:140px;}
+.field .hint{font-size:.8rem;color:var(--ink-mute);margin-top:6px;}
+.field .error{font-size:.8rem;color:var(--accent-dark);margin-top:6px;display:none;}
+.field.invalid input,.field.invalid select,.field.invalid textarea{border-color:var(--accent-dark);}
+.field.invalid .error{display:block;}
+.type-error{font-size:.8rem;color:var(--accent-dark);margin-top:8px;display:none;}
+.type-error.show{display:block;}
 
-.form-success{display:none;text-align:center;padding:50px 10px;}
-.form-success.show{display:block;animation:fadeUp .6s var(--ease);}
-.form-success .check{
-  width:64px;height:64px;border-radius:50%;border:1px solid var(--gold);
-  display:flex;align-items:center;justify-content:center;margin:0 auto 22px;color:var(--gold-dark);
+.dropzone{
+  position:relative;border:1px dashed var(--line-strong);border-radius:var(--radius-sm);
+  padding:20px;text-align:center;background:var(--paper);font-size:.9rem;color:var(--ink-soft);
+  transition:border-color .2s,background .2s;
 }
-.form-success .check svg{width:26px;height:26px;}
+.dropzone:hover,.dropzone.drag{border-color:var(--ink);background:var(--surface);}
+.dropzone input{position:absolute;inset:0;opacity:0;cursor:pointer;}
+.dropzone strong{color:var(--ink);}
+.file-list{margin-top:8px;font-size:.82rem;color:var(--ink-soft);}
+
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:.84rem;color:var(--ink-soft);margin-bottom:20px;}
+.consent input{width:18px;height:18px;margin-top:2px;accent-color:var(--accent);flex-shrink:0;}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;}
+
+.form-success{display:none;text-align:center;padding:48px 8px;}
+.form-success.show{display:block;animation:fadeUp .5s var(--ease);}
+.form-success .ok{
+  width:64px;height:64px;border-radius:50%;background:var(--accent-soft);color:var(--accent-dark);
+  display:grid;place-items:center;margin:0 auto 20px;
+}
+.form-success .ok svg{width:28px;height:28px;}
 .form-success h3{font-size:2rem;margin-bottom:10px;}
-.form-success p{color:var(--ink-soft);}
+.form-success p{color:var(--ink-soft);max-width:420px;margin:0 auto 24px;}
 
-/* ---------- Kundenstimmen ---------- */
-.testimonials{padding:110px 0;background:var(--ivory);border-top:1px solid var(--line);text-align:center;}
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:56px;}
-.testi-card{
-  background:var(--white);padding:44px 32px 36px;border:1px solid var(--line);border-radius:var(--radius);
-  display:flex;flex-direction:column;
-  transition:transform .5s var(--ease),border-color .5s;
+/* ---------- Ablauf ---------- */
+.process{padding:104px 0;background:var(--band);color:#f6f2ec;}
+.process .eyebrow{color:var(--ochre);}
+.process .section-title em{color:var(--ochre);}
+.process .lead{color:#b9b1a3;}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;counter-reset:s;}
+.step{padding-top:24px;border-top:1px solid var(--band-line);}
+.step-num{font-family:'Fraunces',serif;font-style:italic;font-size:2.4rem;color:var(--ochre);line-height:1;margin-bottom:18px;}
+.step h4{font-size:1.3rem;margin-bottom:8px;}
+.step p{color:#b9b1a3;font-size:.94rem;}
+
+/* ---------- Werke ---------- */
+.works{padding:112px 0;}
+.filter-tabs{display:flex;gap:8px;flex-wrap:wrap;}
+.filter-tab{
+  min-height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--line-strong);
+  font-size:.86rem;font-weight:500;color:var(--ink-soft);transition:all .2s;
 }
-.testi-card:hover{transform:translateY(-6px);border-color:var(--gold-light);}
-.stars{color:var(--gold);letter-spacing:4px;font-size:.85rem;margin-bottom:18px;}
-.testi-card blockquote{
-  font-family:'Cormorant Garamond',serif;font-size:1.3rem;line-height:1.5;
-  font-style:italic;margin-bottom:26px;flex:1;
+.filter-tab:hover{border-color:var(--ink);color:var(--ink);}
+.filter-tab.active{background:var(--ink);border-color:var(--ink);color:var(--paper);}
+
+.works-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px 28px;}
+.work{display:flex;flex-direction:column;}
+.work-media{
+  position:relative;aspect-ratio:4/5;overflow:hidden;border-radius:var(--radius-sm);
+  background:var(--paper-2);
 }
-.testi-author{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;}
-.testi-author span{display:block;color:var(--ink-soft);letter-spacing:.06em;text-transform:none;margin-top:3px;}
+.work-media img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease);}
+.work:hover .work-media img{transform:scale(1.03);}
+.work-media .noimg{position:absolute;inset:0;display:grid;place-items:center;color:var(--ink-mute);font-size:.85rem;}
+.status{
+  position:absolute;top:12px;left:12px;
+  font-size:.74rem;font-weight:600;padding:5px 11px;border-radius:999px;
+  background:var(--surface);color:var(--ink);
+}
+.status.reserviert{background:var(--ochre);color:#1c1a17;}
+.status.verkauft{background:var(--ink);color:var(--paper);}
+.work-body{padding-top:16px;display:flex;flex-direction:column;gap:4px;flex:1;}
+.work-cat{font-size:.76rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-dark);}
+.work-body h3{font-size:1.4rem;}
+.work-meta{font-size:.86rem;color:var(--ink-mute);}
+.work-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line);}
+.work-price{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:500;}
+.work-price.muted{font-family:'Manrope',sans-serif;font-size:.9rem;color:var(--ink-mute);}
+.work.sold .work-media img{filter:grayscale(.4);opacity:.85;}
+
+.empty{
+  border:1px dashed var(--line-strong);border-radius:var(--radius);
+  padding:clamp(32px,6vw,64px);display:grid;grid-template-columns:auto 1fr auto;gap:32px;align-items:center;
+  background:var(--surface);
+}
+.empty-art{display:flex;}
+.empty-art span{
+  width:64px;height:80px;border-radius:3px;border:6px solid var(--paper);
+  box-shadow:0 8px 20px -10px rgba(28,26,23,.35);margin-left:-18px;
+}
+.empty-art span:first-child{margin-left:0;transform:rotate(-6deg);}
+.empty-art span:last-child{transform:rotate(5deg);}
+.empty h3{font-size:1.6rem;margin-bottom:6px;}
+.empty p{color:var(--ink-soft);max-width:480px;}
+
+/* ---------- CTA-Band ---------- */
+.cta-band{padding:0 0 112px;}
+.cta-inner{
+  background:var(--accent);color:var(--on-accent);border-radius:calc(var(--radius) * 2);
+  padding:clamp(36px,6vw,72px);display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap;
+  position:relative;overflow:hidden;
+}
+.cta-inner::after{
+  content:'';position:absolute;right:-80px;top:-80px;width:280px;height:280px;border-radius:50%;
+  background:var(--ochre);opacity:.35;
+}
+.cta-inner h2{font-size:clamp(1.9rem,4vw,2.8rem);max-width:620px;position:relative;z-index:1;}
+.cta-inner h2 em{font-style:italic;font-weight:400;}
+.cta-inner .btn{position:relative;z-index:1;background:var(--surface);color:var(--ink);}
+.cta-inner .btn:hover{background:var(--ink);color:var(--paper);}
 
 /* ---------- Footer ---------- */
-footer{background:var(--ink);color:#cfc9b6;padding:84px 0 28px;}
+footer{background:var(--band);color:#c9c1b2;padding:72px 0 28px;}
 .footer-grid{
-  display:grid;grid-template-columns:1.5fr .8fr .8fr 1.1fr;gap:50px;
-  padding-bottom:56px;margin-bottom:26px;border-bottom:1px solid #35322a;
+  display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:48px;
+  padding-bottom:48px;margin-bottom:24px;border-bottom:1px solid var(--band-line);
 }
-.footer-logo-mark{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
-.footer-logo-mark .logo-icon{color:var(--gold);}
-.footer-logo-mark .logo-title{color:#fff;}
-.footer-logo-mark .logo-title em{color:var(--gold-light);}
-.footer-grid h4{
-  font-family:'Jost',sans-serif;font-size:.72rem;font-weight:500;
-  letter-spacing:.26em;text-transform:uppercase;color:#fff;margin-bottom:22px;
+footer .logo-word{color:#fff;}
+footer .logo-mark{background:var(--accent);color:#fff;}
+footer .logo{margin-bottom:16px;}
+.footer-grid h4{font-family:'Manrope',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#fff;margin-bottom:18px;}
+.footer-grid p{font-size:.92rem;color:#a39b8c;}
+.footer-links li{margin-bottom:10px;}
+.footer-links a{font-size:.92rem;color:#a39b8c;transition:color .2s;}
+.footer-links a:hover{color:#fff;}
+.social{display:flex;gap:10px;margin-top:22px;}
+.social a{
+  width:42px;height:42px;border:1px solid #423d34;border-radius:50%;
+  display:grid;place-items:center;transition:all .2s;
 }
-.footer-grid p{font-size:.92rem;color:#a6a08a;}
-.footer-links li{margin-bottom:12px;}
-.footer-links a{font-size:.92rem;color:#a6a08a;transition:color .3s;}
-.footer-links a:hover{color:var(--gold-light);}
-.social-icons{display:flex;gap:10px;margin-top:24px;}
-.social-icons a{
-  width:40px;height:40px;border:1px solid #403c31;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  transition:all .3s var(--ease);
-}
-.social-icons a:hover{background:var(--gold);border-color:var(--gold);color:var(--ink);}
-.social-icons svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
-.footer-bottom{
-  display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
-  font-size:.78rem;color:#857f69;
-}
+.social a:hover{background:var(--accent);border-color:var(--accent);color:var(--on-accent);}
+.social svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
+.footer-bottom{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:.8rem;color:#857e70;}
 
-/* ---------- Back to top ---------- */
-.back-top{
-  position:fixed;right:max(20px,env(safe-area-inset-right));bottom:max(20px,env(safe-area-inset-bottom));
-  width:46px;height:46px;border-radius:50%;
-  background:var(--ink);color:var(--ivory);
-  display:flex;align-items:center;justify-content:center;
-  opacity:0;visibility:hidden;transform:translateY(14px);
-  transition:all .4s var(--ease);z-index:900;
+/* ---------- Mobile Sticky-CTA ---------- */
+.mobile-cta{
+  display:none;position:fixed;left:16px;right:16px;bottom:max(16px,env(safe-area-inset-bottom));z-index:900;
+  transform:translateY(140%);transition:transform .35s var(--ease);
 }
-.back-top svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6;}
-.back-top.show{opacity:1;visibility:visible;transform:none;}
-.back-top:hover{background:var(--gold-dark);}
+.mobile-cta.show{transform:none;}
+.mobile-cta .btn{width:100%;box-shadow:0 12px 30px -10px rgba(28,26,23,.5);}
 
 /* ---------- Responsive ---------- */
-@media(max-width:1200px){
-  .gallery-grid{grid-template-columns:repeat(3,1fr);}
+@media(max-width:1080px){
+  .genres-row{grid-template-columns:repeat(3,1fr);}
+  .genre:nth-child(3){border-right:0;}
+  .genre:nth-child(-n+3){border-bottom:1px solid var(--line);}
 }
-@media(max-width:992px){
+@media(max-width:960px){
   .nav-right>.btn{display:none;}
   .burger{display:flex;}
   .nav-links{
     position:fixed;top:0;right:0;bottom:0;width:min(86vw,340px);
-    background:var(--ivory);
-    flex-direction:column;gap:6px;
-    padding:96px 36px 36px;
+    background:var(--paper);flex-direction:column;gap:0;
+    padding:92px 28px 28px;
     transform:translateX(100%);visibility:hidden;
-    transition:transform .5s var(--ease),visibility .5s;
-    box-shadow:-20px 0 50px rgba(0,0,0,.12);
-    z-index:1001;
+    transition:transform .4s var(--ease),visibility .4s;
+    box-shadow:-20px 0 50px rgba(0,0,0,.12);z-index:1001;
   }
   .nav-links.active{transform:none;visibility:visible;}
-  .nav-links a{display:block;padding:14px 0;font-size:.9rem;border-bottom:1px solid var(--line);}
-  .nav-links a::after{display:none;}
+  .nav-links a{display:block;padding:14px 0;font-size:1.05rem;color:var(--ink);border-bottom:1px solid var(--line);}
   .nav-cta-mobile{display:block;margin-top:24px;}
-  .nav-cta-mobile .btn{width:100%;color:var(--ivory);border-bottom:0;padding:15px;}
+  .nav-cta-mobile a.btn{border-bottom:0;color:var(--paper);padding:0 20px;width:100%;}
 
-  .gallery-grid{grid-template-columns:repeat(2,1fr);gap:34px 20px;}
-  .gallery-grid[data-view="large"]{grid-template-columns:1fr;}
-  .process-grid{grid-template-columns:repeat(2,1fr);}
-  .process-step:nth-child(2){border-right:0;}
-  .process-step:nth-child(-n+2){border-bottom:1px solid var(--line);}
-  .request-grid{grid-template-columns:1fr;gap:48px;}
-  .request-left{position:static;}
-  .testi-grid{grid-template-columns:1fr;}
+  .hero{padding-top:calc(var(--header-h) + 32px);}
+  .hero-grid{grid-template-columns:1fr;gap:56px;}
+  .collage{justify-self:center;max-width:460px;}
+  .request-grid{grid-template-columns:1fr;gap:40px;}
+  .request-aside{position:static;}
+  .steps{grid-template-columns:repeat(2,1fr);gap:36px 24px;}
+  .works-grid{grid-template-columns:repeat(2,1fr);}
+  .empty{grid-template-columns:1fr;text-align:left;}
   .footer-grid{grid-template-columns:1fr 1fr;}
+  .mobile-cta{display:block;}
 }
 @media(max-width:640px){
-  :root{--header-h:68px;}
-  .logo-icon{width:32px;height:32px;}
-  .logo-title{font-size:1.4rem;}
-  .logo-sub{display:none;}
-  .hero{padding-bottom:80px;}
-  .hero-meta{gap:14px 24px;margin-top:44px;}
-  .gallery,.process,.request,.testimonials{padding:80px 0;}
-  .gallery-grid{gap:30px 14px;}
-  .art-details h3{font-size:1.2rem;}
-  .toolbar-group.views{display:none;}
-  .gallery-toolbar{justify-content:space-between;}
-  .process-grid{grid-template-columns:1fr;}
-  .process-step{border-right:0!important;border-bottom:1px solid var(--line);padding:32px 26px;}
-  .process-step:last-child{border-bottom:0;}
+  :root{--header-h:64px;}
+  .logo-word{font-size:1.25rem;}
+  .hero{padding-bottom:64px;}
+  .quickstart{padding:18px;}
+  .quickstart-foot .btn{width:100%;}
+  .genres-row{grid-template-columns:repeat(2,1fr);}
+  .genre{border-right:1px solid var(--line)!important;border-bottom:1px solid var(--line);padding:20px 16px;}
+  .genre:nth-child(2n){border-right:0!important;}
+  .genre:nth-last-child(-n+2){border-bottom:0;}
+  .request,.works{padding:80px 0;}
+  .process{padding:80px 0;}
+  .type-options{grid-template-columns:1fr 1fr;}
   .form-row{grid-template-columns:1fr;gap:0;}
-  .footer-grid{grid-template-columns:1fr;gap:38px;}
-  .quick-view{display:none;}
+  .steps{grid-template-columns:1fr;}
+  .works-grid{grid-template-columns:1fr;gap:36px;}
+  .footer-grid{grid-template-columns:1fr;gap:36px;}
+  .cta-band{padding-bottom:80px;}
+  .hero-badge{width:92px;height:92px;font-size:.85rem;}
+  .hero-badge strong{font-size:1.4rem;}
+  footer{padding-bottom:100px;}
 }
-@media(max-width:400px){
-  .gallery-grid{grid-template-columns:1fr;}
+@media(max-width:380px){
+  .type-options{grid-template-columns:1fr;}
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important;}
@@ -507,29 +539,25 @@ footer{background:var(--ink);color:#cfc9b6;padding:84px 0 28px;}
 <header id="header">
   <div class="container">
     <nav aria-label="Hauptnavigation">
-      <a href="#home" class="logo-mark" aria-label="betuelarts – Startseite">
-        <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="1"/>
-          <path d="M58,18 A34,34 0 1 0 58,82 A25,25 0 1 1 58,18 Z" fill="currentColor"/>
-          <path d="M74,30 L76.6,37.4 L84.4,37.4 L78.1,42 L80.4,49.4 L74,44.8 L67.6,49.4 L69.9,42 L63.6,37.4 L71.4,37.4 Z" fill="currentColor"/>
-        </svg>
-        <span class="logo-text">
-          <span class="logo-title">betuel<em>arts</em></span>
-          <span class="logo-sub">Islamische Kalligraphie</span>
-        </span>
+      <a href="#home" class="logo" aria-label="artsbybn – Startseite">
+        <span class="logo-mark" aria-hidden="true">bn</span>
+        <span class="logo-word">arts<em>by</em>bn</span>
       </a>
 
       <ul class="nav-links" id="navLinks">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#galerie">Galerie</a></li>
+        <li><a href="#anfrage">Anfragen</a></li>
         <li><a href="#ablauf">Ablauf</a></li>
-        <li><a href="#anfrage">Auftragsarbeit</a></li>
+        <li><a href="#werke">Fertige Werke</a></li>
         <li><a href="#kontakt">Kontakt</a></li>
-        <li class="nav-cta-mobile"><a href="#anfrage" class="btn btn-primary">Jetzt anfragen</a></li>
+        <li class="nav-cta-mobile"><a href="#anfrage" class="btn btn-primary">Kunstwerk anfragen</a></li>
       </ul>
 
       <div class="nav-right">
-        <a href="#anfrage" class="btn btn-primary btn-sm">Jetzt anfragen</a>
+        <a href="#anfrage" class="btn btn-primary btn-sm">Kunstwerk anfragen</a>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Dunkles Design aktivieren" title="Dunkles Design">
+          <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+          <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
         <button class="burger" id="burger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="navLinks">
           <span></span><span></span><span></span>
         </button>
@@ -542,178 +570,212 @@ footer{background:var(--ink);color:#cfc9b6;padding:84px 0 28px;}
 <main>
 <!-- ================= HERO ================= -->
 <section class="hero" id="home">
-  <div class="hero-content">
-    <span class="eyebrow">Handgefertigte Unikate</span>
-    <h1>Kalligraphie, die <em>berührt</em></h1>
-    <p>Entdecke islamische Kalligraphie-Kunstwerke aus der Galerie oder lass dir ein individuelles Wandbild anfertigen – mit Hingabe und höchster Präzision gestaltet.</p>
-    <div class="hero-buttons">
-      <a href="#galerie" class="btn btn-primary">Galerie entdecken</a>
-      <a href="#anfrage" class="btn btn-outline">Bild in Auftrag geben</a>
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow">Kunst auf Anfrage</span>
+      <h1>Dein Kunstwerk – <em>von Hand</em> für dich gemacht.</h1>
+      <p class="hero-text">Ob Gemälde, Porträt, Kalligrafie, Illustration oder Wandbild: Beschreib deine Idee, und ich gestalte daraus ein Unikat, das zu dir und deinem Raum passt.</p>
+
+      <div class="quickstart">
+        <span class="quickstart-label" id="qs-label">Was soll entstehen?</span>
+        <div class="type-chips" role="group" aria-labelledby="qs-label">
+          <a href="#anfrage" class="type-chip" data-type="Gemälde"><span class="dot" style="background:var(--accent)"></span>Gemälde</a>
+          <a href="#anfrage" class="type-chip" data-type="Porträt"><span class="dot" style="background:var(--ochre)"></span>Porträt</a>
+          <a href="#anfrage" class="type-chip" data-type="Kalligrafie &amp; Schrift"><span class="dot" style="background:var(--indigo)"></span>Kalligrafie</a>
+          <a href="#anfrage" class="type-chip" data-type="Illustration"><span class="dot" style="background:var(--sage)"></span>Illustration</a>
+          <a href="#anfrage" class="type-chip" data-type="Wandbild"><span class="dot" style="background:var(--ink)"></span>Wandbild</a>
+          <a href="#anfrage" class="type-chip" data-type="Etwas anderes"><span class="dot" style="background:var(--line-strong)"></span>Etwas anderes</a>
+        </div>
+        <div class="quickstart-foot">
+          <a href="#anfrage" class="btn btn-accent">Jetzt anfragen
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <small>Unverbindlich · Antwort meist innerhalb von 48 Std.</small>
+        </div>
+      </div>
+
+      <div class="trust">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-10"/></svg>Handgemachte Unikate</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-10"/></svg>Persönliche Beratung</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-10"/></svg>Sicher verpackt geliefert</span>
+      </div>
     </div>
-    <div class="hero-meta">
-      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12l5 5 9-10"/></svg>100&nbsp;% Handarbeit</span>
-      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12l5 5 9-10"/></svg>Individuelle Wünsche</span>
-      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12l5 5 9-10"/></svg>Sichere Lieferung</span>
+
+    <div class="collage" aria-hidden="true">
+      <!-- Abstrakte Malerei -->
+      <div class="frame frame-1">
+        <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
+          <rect width="400" height="500" fill="#efe4d2"/>
+          <circle cx="250" cy="170" r="92" fill="#d9a441"/>
+          <path d="M0 330 C90 270 170 300 240 330 S360 360 400 320 V500 H0Z" fill="#c4552d"/>
+          <path d="M0 400 C110 360 210 400 290 420 S380 430 400 410 V500 H0Z" fill="#7f8f6c"/>
+          <path d="M0 450 C120 430 230 470 400 450 V500 H0Z" fill="#2f4766"/>
+        </svg>
+        <span class="frame-tag">Gemälde</span>
+      </div>
+      <!-- Linienporträt -->
+      <div class="frame frame-2">
+        <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid slice">
+          <rect width="300" height="300" fill="#f7efe6"/>
+          <circle cx="150" cy="150" r="104" fill="#f4ddd0"/>
+          <path d="M118 92 C130 70 175 66 192 92 C206 114 200 150 186 170 C176 186 164 194 150 194 C128 194 110 172 106 146 C103 126 106 108 118 92Z" fill="none" stroke="#1c1a17" stroke-width="3" stroke-linecap="round"/>
+          <path d="M106 120 C96 80 140 52 176 64 C210 76 220 112 204 140" fill="none" stroke="#1c1a17" stroke-width="3" stroke-linecap="round"/>
+          <path d="M136 132 q6 -5 12 0 M164 132 q6 -5 12 0 M152 140 q-4 16 4 20 M140 172 q12 8 24 0" fill="none" stroke="#1c1a17" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M130 194 C128 214 104 222 84 238 M170 194 C172 214 196 222 216 238" fill="none" stroke="#1c1a17" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <span class="frame-tag">Porträt</span>
+      </div>
+      <!-- Schrift / Pinselstrich -->
+      <div class="frame frame-3">
+        <svg viewBox="0 0 400 320" preserveAspectRatio="xMidYMid slice">
+          <rect width="400" height="320" fill="#2f4766"/>
+          <path d="M60 210 C90 120 130 90 150 120 C170 150 120 220 160 220 C200 220 210 110 240 110 C270 110 240 210 280 210 C310 210 330 150 345 130" fill="none" stroke="#f6f2ec" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="340" cy="230" r="10" fill="#d9a441"/>
+        </svg>
+        <span class="frame-tag">Kalligrafie</span>
+      </div>
+      <div class="hero-badge"><span><strong>1:1</strong>Unikat</span></div>
     </div>
   </div>
 </section>
 
-<!-- ================= GALERIE ================= -->
-<section class="gallery" id="galerie">
-  <div class="container-wide">
+<!-- ================= WAS ICH GESTALTE ================= -->
+<section class="genres" aria-label="Was ich gestalte">
+  <div class="container genres-row">
+    <a href="#anfrage" class="genre" data-type="Gemälde"><span class="dot" style="background:var(--accent)"></span><strong>Gemälde</strong><span>Acryl, Öl, Mixed Media</span></a>
+    <a href="#anfrage" class="genre" data-type="Porträt"><span class="dot" style="background:var(--ochre)"></span><strong>Porträts</strong><span>Menschen &amp; Haustiere</span></a>
+    <a href="#anfrage" class="genre" data-type="Kalligrafie &amp; Schrift"><span class="dot" style="background:var(--indigo)"></span><strong>Kalligrafie</strong><span>Namen, Zitate, Verse</span></a>
+    <a href="#anfrage" class="genre" data-type="Illustration"><span class="dot" style="background:var(--sage)"></span><strong>Illustration</strong><span>Zeichnung &amp; digital</span></a>
+    <a href="#anfrage" class="genre" data-type="Wandbild"><span class="dot" style="background:var(--ink)"></span><strong>Wandbilder</strong><span>Direkt auf die Wand</span></a>
+    <a href="#anfrage" class="genre" data-type="Geschenk"><span class="dot" style="background:var(--line-strong)"></span><strong>Geschenke</strong><span>Hochzeit, Geburt, Jubiläum</span></a>
+  </div>
+</section>
 
-    <div class="gallery-header reveal">
-      <span class="eyebrow">Die Kollektion</span>
-      <h2 class="section-title">Islamische <em>Kalligraphie</em></h2>
-      <div class="rule"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"/></svg></div>
-      <p class="lead">Jedes Kunstwerk ist ein Original – bereit, deinem Zuhause spirituelle Schönheit zu verleihen.</p>
-    </div>
+<!-- ================= ANFRAGE ================= -->
+<section class="request" id="anfrage">
+  <div class="container request-grid">
+    <aside class="request-aside reveal">
+      <span class="eyebrow">Anfrage</span>
+      <h2 class="section-title">Erzähl mir von <em>deiner Idee</em>.</h2>
+      <p class="lead">Je mehr ich weiß, desto genauer wird mein Angebot. Du musst aber nicht alles schon wissen – den Rest klären wir gemeinsam.</p>
+      <ul class="check-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-10"/></svg>Unverbindliches Angebot mit Preis und Zeitrahmen</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-10"/></svg>Skizze zur Abstimmung, bevor ich loslege</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-10"/></svg>Jedes Werk ein handgemachtes Original</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-10"/></svg>Sicherer Versand oder persönliche Übergabe</li>
+      </ul>
+      <p class="aside-note">Lieber ein fertiges Werk? <a href="#werke">Fertige Werke ansehen</a></p>
+    </aside>
 
-    <div class="filter-tabs reveal" role="tablist" aria-label="Kategorien">
-      <button class="filter-tab active" data-filter="all">Alle</button>
-      <button class="filter-tab" data-filter="allah">Allah &amp; Muhammad ﷺ</button>
-      <button class="filter-tab" data-filter="ayat">Ayat &amp; Suren</button>
-      <button class="filter-tab" data-filter="dhikr">Dhikr</button>
-    </div>
+    <div class="form-card reveal">
+      <form id="requestForm" novalidate>
+        <div id="formFields">
+          <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
 
-    <div class="gallery-toolbar reveal">
-      <span class="result-count" id="resultCount" aria-live="polite">8 Werke</span>
-      <div class="toolbar-group views">
-        <span class="toolbar-label">Ansicht</span>
-        <div class="view-icons">
-          <button class="view-btn active" data-view="grid" aria-label="Kompakte Ansicht">
-            <svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="6"/><rect x="9" y="1" width="6" height="6"/><rect x="1" y="9" width="6" height="6"/><rect x="9" y="9" width="6" height="6"/></svg>
+          <fieldset class="form-step" style="border:0">
+            <div class="step-head"><span class="num">01</span><h3>Was soll entstehen?</h3></div>
+            <legend class="hp">Art des Kunstwerks</legend>
+            <div class="type-options" id="typeOptions">
+              <div class="type-option"><input type="radio" name="art" id="t1" value="Gemälde"><label for="t1"><strong><span class="dot" style="background:var(--accent)"></span>Gemälde</strong><small>Leinwand, Papier, Holz</small></label></div>
+              <div class="type-option"><input type="radio" name="art" id="t2" value="Porträt"><label for="t2"><strong><span class="dot" style="background:var(--ochre)"></span>Porträt</strong><small>Nach deinem Foto</small></label></div>
+              <div class="type-option"><input type="radio" name="art" id="t3" value="Kalligrafie &amp; Schrift"><label for="t3"><strong><span class="dot" style="background:var(--indigo)"></span>Kalligrafie</strong><small>Namen, Zitate, Verse</small></label></div>
+              <div class="type-option"><input type="radio" name="art" id="t4" value="Illustration"><label for="t4"><strong><span class="dot" style="background:var(--sage)"></span>Illustration</strong><small>Analog oder digital</small></label></div>
+              <div class="type-option"><input type="radio" name="art" id="t5" value="Wandbild"><label for="t5"><strong><span class="dot" style="background:var(--ink)"></span>Wandbild</strong><small>Direkt an deiner Wand</small></label></div>
+              <div class="type-option"><input type="radio" name="art" id="t6" value="Geschenk"><label for="t6"><strong><span class="dot" style="background:var(--line-strong)"></span>Geschenk</strong><small>Für einen Anlass</small></label></div>
+              <div class="type-option"><input type="radio" name="art" id="t7" value="Fertiges Werk kaufen"><label for="t7"><strong><span class="dot" style="background:var(--accent-dark)"></span>Fertiges Werk</strong><small>Aus meinen Werken</small></label></div>
+              <div class="type-option"><input type="radio" name="art" id="t8" value="Etwas anderes"><label for="t8"><strong><span class="dot" style="background:var(--paper-2);box-shadow:inset 0 0 0 1px var(--line-strong)"></span>Etwas anderes</strong><small>Erzähl es mir</small></label></div>
+            </div>
+            <p class="type-error" id="typeError">Wähle aus, was entstehen soll – oder „Etwas anderes“.</p>
+          </fieldset>
+
+          <div class="form-step">
+            <div class="step-head"><span class="num">02</span><h3>Deine Vorstellung</h3></div>
+            <div class="field">
+              <label for="f-msg">Beschreibe deine Idee</label>
+              <textarea id="f-msg" name="nachricht" required placeholder="z. B. Abstraktes Bild in Terrakotta und Grün fürs Wohnzimmer, eher ruhig und warm …"></textarea>
+              <p class="error">Beschreib kurz deine Idee, damit ich dir ein passendes Angebot machen kann.</p>
+            </div>
+            <div class="form-row">
+              <div class="field">
+                <label for="f-size">Größe <span class="opt">(optional)</span></label>
+                <select id="f-size" name="groesse">
+                  <option value="">Noch offen</option>
+                  <option>Klein (bis 30 × 40 cm)</option>
+                  <option>Mittel (bis 50 × 70 cm)</option>
+                  <option>Groß (bis 100 × 120 cm)</option>
+                  <option>Sehr groß / Wandbild</option>
+                  <option>Eigene Maße</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="f-budget">Budget <span class="opt">(optional)</span></label>
+                <select id="f-budget" name="budget">
+                  <option value="">Noch offen</option>
+                  <option>bis 150 €</option>
+                  <option>150 – 400 €</option>
+                  <option>400 – 800 €</option>
+                  <option>über 800 €</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="field">
+                <label for="f-ref">Bezug / Motiv <span class="opt">(optional)</span></label>
+                <input id="f-ref" name="bezug" type="text" placeholder="z. B. Name, Zitat, Werkstitel">
+              </div>
+              <div class="field">
+                <label for="f-date">Wunschtermin <span class="opt">(optional)</span></label>
+                <input id="f-date" name="termin" type="text" placeholder="z. B. bis Mitte Dezember">
+              </div>
+            </div>
+            <div class="field">
+              <span class="label" id="f-file-label">Referenzbilder <span class="opt">(optional)</span></span>
+              <div class="dropzone" id="dropzone">
+                <input id="f-file" name="dateien" type="file" accept="image/*" multiple aria-labelledby="f-file-label">
+                <strong>Bilder auswählen</strong> oder hierher ziehen<br><small>Fotos, Skizzen, Inspiration – bis zu 5 Bilder</small>
+              </div>
+              <div class="file-list" id="fileList" aria-live="polite"></div>
+            </div>
+          </div>
+
+          <div class="form-step">
+            <div class="step-head"><span class="num">03</span><h3>Wie erreiche ich dich?</h3></div>
+            <div class="form-row">
+              <div class="field">
+                <label for="f-name">Name</label>
+                <input id="f-name" name="name" type="text" required autocomplete="name">
+                <p class="error">Wie darf ich dich ansprechen?</p>
+              </div>
+              <div class="field">
+                <label for="f-mail">E-Mail</label>
+                <input id="f-mail" name="email" type="email" required autocomplete="email">
+                <p class="error">Diese E-Mail-Adresse sieht unvollständig aus – z. B. name@beispiel.de</p>
+              </div>
+            </div>
+            <div class="field">
+              <label for="f-phone">Telefon / WhatsApp <span class="opt">(optional)</span></label>
+              <input id="f-phone" name="telefon" type="tel" autocomplete="tel">
+            </div>
+          </div>
+
+          <label class="consent">
+            <input type="checkbox" name="einwilligung" id="f-consent" required>
+            <span>Ich bin einverstanden, dass meine Angaben zur Bearbeitung meiner Anfrage gespeichert werden. Mehr dazu im <a href="#" style="text-decoration:underline">Datenschutz</a>.</span>
+          </label>
+          <p class="type-error" id="consentError" style="margin:-12px 0 16px">Bitte bestätige die Einwilligung, damit ich deine Anfrage bearbeiten darf.</p>
+
+          <button type="submit" class="btn btn-primary btn-block">Anfrage senden
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </button>
-          <button class="view-btn" data-view="large" aria-label="Große Ansicht">
-            <svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="14"/><rect x="9" y="1" width="6" height="14"/></svg>
-          </button>
         </div>
-      </div>
-      <div class="toolbar-group">
-        <label class="toolbar-label" for="sortSelect">Sortieren</label>
-        <select class="toolbar-select" id="sortSelect">
-          <option value="pop">Beliebtheit</option>
-          <option value="asc">Preis aufsteigend</option>
-          <option value="desc">Preis absteigend</option>
-          <option value="new">Neuheiten</option>
-        </select>
-      </div>
-    </div>
 
-    <div class="gallery-grid" id="galleryGrid" data-view="grid">
-
-      <!-- 1 -->
-      <article class="art-card reveal" data-category="allah" data-price="49" data-pop="1" data-new="1" data-title="Al-Jalal Schwarz">
-        <div class="art-img-wrap">
-          <div class="card-top-row"><span class="art-badge">Neu</span><button class="wishlist-btn" aria-label="Merken"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.6-8-11.2A4.8 4.8 0 0 1 12 7a4.8 4.8 0 0 1 8 2.8C20 15.4 12 21 12 21z"/></svg></button></div>
-          <div class="art-canvas canvas-dark"><div class="calligraphy cal-xl"><span lang="ar" dir="rtl">الله</span><span class="cal-sub">Allah</span></div></div>
-          <div class="quick-view"><a href="#anfrage" class="qv-btn" data-request>Dieses Motiv anfragen</a></div>
+        <div class="form-success" id="formSuccess" role="status">
+          <div class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-10"/></svg></div>
+          <h3>Danke für deine Anfrage!</h3>
+          <p>Ich schaue mir deine Idee in Ruhe an und melde mich meist innerhalb von 48 Stunden mit einem Angebot.</p>
+          <a href="#werke" class="btn btn-ghost">Fertige Werke ansehen</a>
         </div>
-        <div class="art-details">
-          <span class="art-category">Allah Kalligraphie</span>
-          <h3>Al-Jalal Schwarz</h3>
-          <div class="price-row"><span class="price-label">ab</span><span class="price-new">49 €</span></div>
-        </div>
-      </article>
-
-      <!-- 2 -->
-      <article class="art-card reveal" data-category="dhikr" data-price="59" data-pop="2" data-new="0" data-title="Bismillah Elegance">
-        <div class="art-img-wrap">
-          <div class="card-top-row"><span class="art-badge sale">Sale</span><button class="wishlist-btn" aria-label="Merken"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.6-8-11.2A4.8 4.8 0 0 1 12 7a4.8 4.8 0 0 1 8 2.8C20 15.4 12 21 12 21z"/></svg></button></div>
-          <div class="art-canvas canvas-light"><div class="calligraphy cal-lg"><span lang="ar" dir="rtl">بسم الله</span><span class="cal-sub">Bismillah</span></div></div>
-          <div class="quick-view"><a href="#anfrage" class="qv-btn" data-request>Dieses Motiv anfragen</a></div>
-        </div>
-        <div class="art-details">
-          <span class="art-category">Dhikr Kunst</span>
-          <h3>Bismillah Elegance</h3>
-          <div class="price-row"><span class="price-old">85 €</span><span class="price-new">59 €</span></div>
-        </div>
-      </article>
-
-      <!-- 3 -->
-      <article class="art-card reveal" data-category="ayat" data-price="120" data-pop="3" data-new="0" data-title="Ayat al-Kursi Gold">
-        <div class="art-img-wrap">
-          <div class="card-top-row"><span class="art-badge">Limitiert</span><button class="wishlist-btn" aria-label="Merken"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.6-8-11.2A4.8 4.8 0 0 1 12 7a4.8 4.8 0 0 1 8 2.8C20 15.4 12 21 12 21z"/></svg></button></div>
-          <div class="art-canvas canvas-light"><div class="calligraphy cal-md"><span lang="ar" dir="rtl">اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ</span><span class="cal-sub">Ayat al-Kursi</span></div></div>
-          <div class="quick-view"><a href="#anfrage" class="qv-btn" data-request>Dieses Motiv anfragen</a></div>
-        </div>
-        <div class="art-details">
-          <span class="art-category">Ayat &amp; Suren</span>
-          <h3>Ayat al-Kursi Gold</h3>
-          <div class="price-row"><span class="price-label">ab</span><span class="price-new">120 €</span></div>
-        </div>
-      </article>
-
-      <!-- 4 -->
-      <article class="art-card reveal" data-category="allah" data-price="55" data-pop="4" data-new="0" data-title="Muhammad ﷺ Edition">
-        <div class="art-img-wrap">
-          <div class="card-top-row"><span class="art-badge">Bestseller</span><button class="wishlist-btn" aria-label="Merken"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.6-8-11.2A4.8 4.8 0 0 1 12 7a4.8 4.8 0 0 1 8 2.8C20 15.4 12 21 12 21z"/></svg></button></div>
-          <div class="art-canvas canvas-dark"><div class="calligraphy cal-lg"><span lang="ar" dir="rtl">محمد ﷺ</span><span class="cal-sub">Muhammad</span></div></div>
-          <div class="quick-view"><a href="#anfrage" class="qv-btn" data-request>Dieses Motiv anfragen</a></div>
-        </div>
-        <div class="art-details">
-          <span class="art-category">Namen Kalligraphie</span>
-          <h3>Muhammad ﷺ Edition</h3>
-          <div class="price-row"><span class="price-label">ab</span><span class="price-new">55 €</span></div>
-        </div>
-      </article>
-
-      <!-- 5 -->
-      <article class="art-card reveal" data-category="ayat" data-price="75" data-pop="5" data-new="1" data-title="Al-Fatiha Titelbild">
-        <div class="art-img-wrap">
-          <div class="card-top-row"><span class="art-badge">Neu</span><button class="wishlist-btn" aria-label="Merken"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.6-8-11.2A4.8 4.8 0 0 1 12 7a4.8 4.8 0 0 1 8 2.8C20 15.4 12 21 12 21z"/></svg></button></div>
-          <div class="art-canvas canvas-light"><div class="calligraphy cal-lg"><span lang="ar" dir="rtl">الفاتحة</span><span class="cal-sub">Surah Al-Fatiha</span></div></div>
-          <div class="quick-view"><a href="#anfrage" class="qv-btn" data-request>Dieses Motiv anfragen</a></div>
-        </div>
-        <div class="art-details">
-          <span class="art-category">Ayat &amp; Suren</span>
-          <h3>Al-Fatiha Titelbild</h3>
-          <div class="price-row"><span class="price-label">ab</span><span class="price-new">75 €</span></div>
-        </div>
-      </article>
-
-      <!-- 6 -->
-      <article class="art-card reveal" data-category="dhikr" data-price="45" data-pop="6" data-new="0" data-title="Alhamdulillah Gold">
-        <div class="art-img-wrap">
-          <div class="card-top-row"><span class="art-badge sale">Sale</span><button class="wishlist-btn" aria-label="Merken"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.6-8-11.2A4.8 4.8 0 0 1 12 7a4.8 4.8 0 0 1 8 2.8C20 15.4 12 21 12 21z"/></svg></button></div>
-          <div class="art-canvas canvas-dark"><div class="calligraphy cal-lg"><span lang="ar" dir="rtl">الحمد لله</span><span class="cal-sub">Alhamdulillah</span></div></div>
-          <div class="quick-view"><a href="#anfrage" class="qv-btn" data-request>Dieses Motiv anfragen</a></div>
-        </div>
-        <div class="art-details">
-          <span class="art-category">Dhikr Kunst</span>
-          <h3>Alhamdulillah Gold</h3>
-          <div class="price-row"><span class="price-old">70 €</span><span class="price-new">45 €</span></div>
-        </div>
-      </article>
-
-      <!-- 7 -->
-      <article class="art-card reveal" data-category="dhikr" data-price="39" data-pop="7" data-new="1" data-title="MashaAllah Classic">
-        <div class="art-img-wrap">
-          <div class="card-top-row"><span class="art-badge">Neu</span><button class="wishlist-btn" aria-label="Merken"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.6-8-11.2A4.8 4.8 0 0 1 12 7a4.8 4.8 0 0 1 8 2.8C20 15.4 12 21 12 21z"/></svg></button></div>
-          <div class="art-canvas canvas-light"><div class="calligraphy cal-lg"><span lang="ar" dir="rtl">ما شاء الله</span><span class="cal-sub">MashaAllah</span></div></div>
-          <div class="quick-view"><a href="#anfrage" class="qv-btn" data-request>Dieses Motiv anfragen</a></div>
-        </div>
-        <div class="art-details">
-          <span class="art-category">Dhikr Kunst</span>
-          <h3>MashaAllah Classic</h3>
-          <div class="price-row"><span class="price-label">ab</span><span class="price-new">39 €</span></div>
-        </div>
-      </article>
-
-      <!-- 8 -->
-      <article class="art-card reveal" data-category="dhikr" data-price="42" data-pop="8" data-new="0" data-title="SubhanAllah Noir">
-        <div class="art-img-wrap">
-          <div class="card-top-row"><span class="art-badge">Limitiert</span><button class="wishlist-btn" aria-label="Merken"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.6-8-11.2A4.8 4.8 0 0 1 12 7a4.8 4.8 0 0 1 8 2.8C20 15.4 12 21 12 21z"/></svg></button></div>
-          <div class="art-canvas canvas-dark"><div class="calligraphy cal-lg"><span lang="ar" dir="rtl">سبحان الله</span><span class="cal-sub">SubhanAllah</span></div></div>
-          <div class="quick-view"><a href="#anfrage" class="qv-btn" data-request>Dieses Motiv anfragen</a></div>
-        </div>
-        <div class="art-details">
-          <span class="art-category">Dhikr Kunst</span>
-          <h3>SubhanAllah Noir</h3>
-          <div class="price-row"><span class="price-label">ab</span><span class="price-new">42 €</span></div>
-        </div>
-      </article>
-
+      </form>
     </div>
   </div>
 </section>
@@ -721,122 +783,57 @@ footer{background:var(--ink);color:#cfc9b6;padding:84px 0 28px;}
 <!-- ================= ABLAUF ================= -->
 <section class="process" id="ablauf">
   <div class="container">
-    <div class="center reveal">
-      <span class="eyebrow">So funktioniert's</span>
-      <h2 class="section-title">Dein Weg zum <em>Unikat</em></h2>
-      <div class="rule"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"/></svg></div>
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Ablauf</span>
+        <h2 class="section-title">Von der Idee zum <em>Original</em>.</h2>
+      </div>
+      <p class="lead">Transparent in vier Schritten – du weißt immer, woran ich gerade arbeite.</p>
     </div>
-    <div class="process-grid reveal">
-      <div class="process-step"><div class="step-num">01</div><h4>Anfrage stellen</h4><p>Beschreibe deine Idee, gewünschte Verse und deinen Stil.</p></div>
-      <div class="process-step"><div class="step-num">02</div><h4>Beratung</h4><p>Wir besprechen Details, Farben und Komposition gemeinsam.</p></div>
-      <div class="process-step"><div class="step-num">03</div><h4>Das Kunstwerk entsteht</h4><p>Dein Werk wird mit höchster Sorgfalt von Hand gestaltet.</p></div>
-      <div class="process-step"><div class="step-num">04</div><h4>Lieferung</h4><p>Dein Original kommt sicher verpackt direkt zu dir nach Hause.</p></div>
+    <div class="steps reveal">
+      <div class="step"><div class="step-num">01</div><h4>Anfrage</h4><p>Du beschreibst deine Idee, gern mit Fotos oder Inspiration.</p></div>
+      <div class="step"><div class="step-num">02</div><h4>Angebot &amp; Skizze</h4><p>Du bekommst Preis, Zeitrahmen und eine erste Skizze zur Abstimmung.</p></div>
+      <div class="step"><div class="step-num">03</div><h4>Entstehung</h4><p>Ich setze dein Werk von Hand um und halte dich mit Fotos auf dem Laufenden.</p></div>
+      <div class="step"><div class="step-num">04</div><h4>Übergabe</h4><p>Sicher verpackt per Versand – oder persönlich, wenn es passt.</p></div>
     </div>
   </div>
 </section>
 
-<!-- ================= ANFRAGE ================= -->
-<section class="request" id="anfrage">
+<!-- ================= FERTIGE WERKE ================= -->
+<section class="works" id="werke">
   <div class="container">
-    <div class="request-grid">
-      <div class="request-left reveal">
-        <span class="eyebrow">Individuell &amp; persönlich</span>
-        <h2 class="section-title">Dein eigenes <em>Wunschbild</em></h2>
-        <p>Ob ein besonderer Vers, ein Name oder eine persönliche Botschaft – wir gestalten genau das Kunstwerk, das du dir vorstellst.</p>
-        <ul class="feature-list">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12l5 5 9-10"/></svg>100&nbsp;% handgefertigt, keine Drucke</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12l5 5 9-10"/></svg>Unverbindliches Erstgespräch</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12l5 5 9-10"/></svg>Persönliche Farb- &amp; Stilberatung</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12l5 5 9-10"/></svg>Lieferung in 3–5 Wochen</li>
-        </ul>
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Fertige Werke</span>
+        <h2 class="section-title">Bereit für <em>deine Wand</em>.</h2>
+        <p class="lead">Originale, die schon fertig sind – sofort verfügbar und direkt anfragbar.</p>
       </div>
+      <div class="filter-tabs" id="filterTabs" role="group" aria-label="Nach Kategorie filtern"></div>
+    </div>
 
-      <div class="form-box reveal">
-        <form id="requestForm" novalidate>
-          <div id="formFields">
-            <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="f-name">Vollständiger Name</label>
-                <input id="f-name" name="name" type="text" required autocomplete="name" placeholder="Max Mustermann">
-              </div>
-              <div class="form-group">
-                <label for="f-mail">E-Mail-Adresse</label>
-                <input id="f-mail" name="email" type="email" required autocomplete="email" placeholder="max@email.de">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="f-size">Gewünschte Größe</label>
-                <select id="f-size" name="size" required>
-                  <option value="">Bitte wählen</option>
-                  <option>50 × 70 cm</option>
-                  <option>70 × 90 cm</option>
-                  <option>90 × 120 cm</option>
-                  <option>Individuell</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="verse">Vers / Name / Motiv</label>
-                <input id="verse" name="verse" type="text" placeholder="z. B. Ayat al-Kursi">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="f-budget">Budget</label>
-              <select id="f-budget" name="budget">
-                <option value="">Bitte wählen</option>
-                <option>40 – 80 €</option>
-                <option>80 – 150 €</option>
-                <option>150 € +</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="f-msg">Deine Vision</label>
-              <textarea id="f-msg" name="message" required placeholder="Erzähl uns von Farben, Stil, Rahmen …"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="f-file">Referenzbild (optional)</label>
-              <input id="f-file" name="file" type="file" accept="image/*">
-            </div>
-            <p class="form-note">Mit dem Absenden stimmst du der Verarbeitung deiner Angaben zur Bearbeitung der Anfrage zu. Details in der Datenschutzerklärung.</p>
-            <button type="submit" class="btn btn-primary submit-btn">Anfrage absenden</button>
-          </div>
+    <div class="works-grid" id="worksGrid"></div>
 
-          <div class="form-success" id="formSuccess" role="status">
-            <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12l5 5 9-10"/></svg></div>
-            <h3>Vielen Dank!</h3>
-            <p>Wir haben deine Anfrage erhalten und melden uns innerhalb von 24 Stunden bei dir.</p>
-          </div>
-        </form>
+    <div class="empty reveal" id="worksEmpty" hidden>
+      <div class="empty-art" aria-hidden="true">
+        <span style="background:var(--ochre)"></span><span style="background:var(--accent)"></span><span style="background:var(--indigo)"></span>
       </div>
+      <div>
+        <h3>Neue Werke sind in Arbeit.</h3>
+        <p>Hier erscheinen bald fertige Originale mit Preis. Bis dahin gestalte ich dir gern ein Werk nach deinen Wünschen.</p>
+      </div>
+      <a href="#anfrage" class="btn btn-primary">Wunschwerk anfragen</a>
     </div>
   </div>
 </section>
 
-<!-- ================= KUNDENSTIMMEN ================= -->
-<section class="testimonials">
+<!-- ================= CTA ================= -->
+<section class="cta-band">
   <div class="container">
-    <div class="reveal">
-      <span class="eyebrow">Kundenstimmen</span>
-      <h2 class="section-title">Was unsere Kunden <em>sagen</em></h2>
-      <div class="rule"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"/></svg></div>
-    </div>
-    <div class="testi-grid">
-      <figure class="testi-card reveal">
-        <div class="stars" aria-label="5 von 5 Sternen">★★★★★</div>
-        <blockquote>„Die Kalligraphie ist atemberaubend schön. Jedes Detail strahlt Respekt und Hingabe aus."</blockquote>
-        <figcaption class="testi-author">Amina K.<span>München</span></figcaption>
-      </figure>
-      <figure class="testi-card reveal">
-        <div class="stars" aria-label="5 von 5 Sternen">★★★★★</div>
-        <blockquote>„Professionell, persönlich und ein wunderschönes Ergebnis. Absolute Empfehlung!"</blockquote>
-        <figcaption class="testi-author">Yusuf T.<span>Hamburg</span></figcaption>
-      </figure>
-      <figure class="testi-card reveal">
-        <div class="stars" aria-label="5 von 5 Sternen">★★★★★</div>
-        <blockquote>„Von der Beratung bis zur Lieferung war alles erstklassig organisiert."</blockquote>
-        <figcaption class="testi-author">Leila M.<span>Berlin</span></figcaption>
-      </figure>
+    <div class="cta-inner reveal">
+      <h2>Du hast eine Idee im Kopf? <em>Lass sie uns gemeinsam an die Wand bringen.</em></h2>
+      <a href="#anfrage" class="btn">Kunstwerk anfragen
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
     </div>
   </div>
 </section>
@@ -847,28 +844,20 @@ footer{background:var(--ink);color:#cfc9b6;padding:84px 0 28px;}
   <div class="container">
     <div class="footer-grid">
       <div>
-        <div class="footer-logo-mark">
-          <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="1"/>
-            <path d="M58,18 A34,34 0 1 0 58,82 A25,25 0 1 1 58,18 Z" fill="currentColor"/>
-            <path d="M74,30 L76.6,37.4 L84.4,37.4 L78.1,42 L80.4,49.4 L74,44.8 L67.6,49.4 L69.9,42 L63.6,37.4 L71.4,37.4 Z" fill="currentColor"/>
-          </svg>
-          <span class="logo-title">betuel<em>arts</em></span>
-        </div>
-        <p>Handgefertigte islamische Kalligraphie für dein Zuhause – zeitlos, individuell und mit Hingabe gestaltet.</p>
-        <div class="social-icons">
+        <a href="#home" class="logo"><span class="logo-mark" aria-hidden="true">bn</span><span class="logo-word">arts<em>by</em>bn</span></a>
+        <p>Handgemachte Kunst auf Anfrage – Gemälde, Porträts, Kalligrafie, Illustrationen und Wandbilder.</p>
+        <div class="social">
           <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/></svg></a>
-          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"/></svg></a>
+          <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 3c.5 2.8 2.4 4.6 5 5"/></svg></a>
           <a href="#anfrage" aria-label="Anfrage senden"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
         </div>
       </div>
       <div>
-        <h4>Navigation</h4>
+        <h4>Seite</h4>
         <ul class="footer-links">
-          <li><a href="#home">Home</a></li>
-          <li><a href="#galerie">Galerie</a></li>
+          <li><a href="#anfrage">Anfragen</a></li>
           <li><a href="#ablauf">Ablauf</a></li>
-          <li><a href="#anfrage">Auftragsarbeit</a></li>
+          <li><a href="#werke">Fertige Werke</a></li>
         </ul>
       </div>
       <div>
@@ -882,35 +871,56 @@ footer{background:var(--ink);color:#cfc9b6;padding:84px 0 28px;}
       </div>
       <div>
         <h4>Kontakt</h4>
-        <p>Musterstraße 12<br>80331 München</p>
-        <p style="margin-top:12px;">info@betuelarts.de<br>+49 89 123 456 78</p>
+        <p>info@artsbybn.de</p>
+        <p style="margin-top:10px">Antwort meist innerhalb von 48 Stunden.</p>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© <span id="year">2026</span> betuelarts. Alle Rechte vorbehalten.</span>
+      <span>© <span id="year">2026</span> artsbybn. Alle Rechte vorbehalten.</span>
       <span>Alle Preise inkl. MwSt., zzgl. Versand.</span>
     </div>
   </div>
 </footer>
 
-<button class="back-top" id="backTop" aria-label="Nach oben">
-  <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-</button>
+<div class="mobile-cta" id="mobileCta"><a href="#anfrage" class="btn btn-accent">Kunstwerk anfragen</a></div>
 
+<script src="works.js"></script>
 <script>
 (function(){
   const $ = (s, c=document) => c.querySelector(s);
   const $$ = (s, c=document) => Array.from(c.querySelectorAll(s));
 
-  /* Header & Back-to-top */
-  const header = $('#header'), backTop = $('#backTop');
+  /* Header & mobile CTA */
+  const header = $('#header'), mobileCta = $('#mobileCta'), anfrage = $('#anfrage');
   const onScroll = () => {
-    header.classList.toggle('scrolled', window.scrollY > 40);
-    backTop.classList.toggle('show', window.scrollY > 600);
+    header.classList.toggle('scrolled', window.scrollY > 30);
+    const r = anfrage.getBoundingClientRect();
+    const inForm = r.top < window.innerHeight && r.bottom > 0;
+    mobileCta.classList.toggle('show', window.scrollY > 500 && !inForm);
   };
   window.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
-  backTop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+  /* Hell / Dunkel */
+  const root = document.documentElement, themeBtn = $('#themeToggle');
+  const themeMeta = $('meta[name="theme-color"]');
+  const sysDark = window.matchMedia('(prefers-color-scheme: dark)');
+  function applyTheme(){
+    const dark = root.dataset.theme ? root.dataset.theme === 'dark' : sysDark.matches;
+    root.dataset.themeActive = dark ? 'dark' : 'light';
+    themeMeta.setAttribute('content', dark ? '#151412' : '#f6f2ec');
+    const label = dark ? 'Helles Design aktivieren' : 'Dunkles Design aktivieren';
+    themeBtn.setAttribute('aria-label', label);
+    themeBtn.title = dark ? 'Helles Design' : 'Dunkles Design';
+  }
+  themeBtn.addEventListener('click', () => {
+    const next = root.dataset.themeActive === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try { localStorage.setItem('artsbybn-theme', next); } catch(e) {}
+    applyTheme();
+  });
+  sysDark.addEventListener('change', () => { if(!root.dataset.theme) applyTheme(); });
+  applyTheme();
 
   /* Mobile Menü */
   const burger = $('#burger'), navLinks = $('#navLinks'), overlay = $('#navOverlay');
@@ -926,75 +936,122 @@ footer{background:var(--ink);color:#cfc9b6;padding:84px 0 28px;}
   overlay.addEventListener('click', () => setMenu(false));
   $$('.nav-links a').forEach(a => a.addEventListener('click', () => setMenu(false)));
   document.addEventListener('keydown', e => { if(e.key === 'Escape') setMenu(false); });
-  window.matchMedia('(min-width:993px)').addEventListener('change', e => { if(e.matches) setMenu(false); });
+  window.matchMedia('(min-width:961px)').addEventListener('change', e => { if(e.matches) setMenu(false); });
 
   /* Reveal */
   const io = new IntersectionObserver(entries => {
     entries.forEach(en => { if(en.isIntersecting){ en.target.classList.add('active'); io.unobserve(en.target); } });
-  }, {threshold:.12});
-  $$('.reveal').forEach(el => io.observe(el));
+  }, {threshold:.1});
+  const observeReveal = root => $$('.reveal', root).forEach(el => io.observe(el));
+  observeReveal(document);
 
-  /* Galerie: Filter, Sortierung, Ansicht */
-  const grid = $('#galleryGrid');
-  const cards = $$('.art-card', grid);
-  const tabs = $$('.filter-tab');
-  const sortSel = $('#sortSelect');
-  const count = $('#resultCount');
-  let currentFilter = 'all';
-
-  function applyFilter(){
-    let n = 0;
-    cards.forEach(c => {
-      const show = currentFilter === 'all' || c.dataset.category === currentFilter;
-      c.hidden = !show;
-      if(show){ n++; c.classList.add('active'); }
-    });
-    count.textContent = n + (n === 1 ? ' Werk' : ' Werke');
+  /* Art vorauswählen (Hero-Chips, Kategorien, Werke) */
+  function selectType(value){
+    const radio = $$('#typeOptions input').find(r => r.value === value);
+    if(radio){ radio.checked = true; $('#typeError').classList.remove('show'); }
   }
-  function applySort(){
-    const v = sortSel.value;
-    const sorted = cards.slice().sort((a,b) => {
-      if(v === 'asc')  return a.dataset.price - b.dataset.price;
-      if(v === 'desc') return b.dataset.price - a.dataset.price;
-      if(v === 'new')  return (b.dataset.new - a.dataset.new) || (a.dataset.pop - b.dataset.pop);
-      return a.dataset.pop - b.dataset.pop;
+  $$('[data-type]').forEach(el => el.addEventListener('click', () => selectType(el.dataset.type)));
+
+  /* ---------- Fertige Werke ---------- */
+  const works = Array.isArray(window.ARTWORKS) ? window.ARTWORKS.filter(w => w && w.titel) : [];
+  const grid = $('#worksGrid'), tabsEl = $('#filterTabs'), empty = $('#worksEmpty');
+  const euro = new Intl.NumberFormat('de-DE', {style:'currency', currency:'EUR', maximumFractionDigits:0});
+  const statusText = {verfuegbar:'Verfügbar', reserviert:'Reserviert', verkauft:'Verkauft'};
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+  function card(w){
+    const status = statusText[w.status] ? w.status : 'verfuegbar';
+    const sold = status === 'verkauft';
+    const hasPrice = typeof w.preis === 'number' && w.preis > 0;
+    const meta = [w.technik, w.masse, w.jahr].filter(Boolean).map(esc).join(' · ');
+    const el = document.createElement('article');
+    el.className = 'work reveal' + (sold ? ' sold' : '');
+    el.dataset.cat = w.kategorie || '';
+    el.innerHTML = `
+      <div class="work-media">
+        ${w.bild ? `<img src="${esc(w.bild)}" alt="${esc(w.titel)}" loading="lazy">` : `<div class="noimg">Foto folgt</div>`}
+        <span class="status ${status}">${statusText[status]}</span>
+      </div>
+      <div class="work-body">
+        ${w.kategorie ? `<span class="work-cat">${esc(w.kategorie)}</span>` : ''}
+        <h3>${esc(w.titel)}</h3>
+        ${meta ? `<span class="work-meta">${meta}</span>` : ''}
+        <div class="work-foot">
+          ${sold ? `<span class="work-price muted">Verkauft</span>`
+                 : hasPrice ? `<span class="work-price">${euro.format(w.preis)}</span>`
+                            : `<span class="work-price muted">Preis auf Anfrage</span>`}
+          <a href="#anfrage" class="btn ${sold ? 'btn-ghost' : 'btn-primary'} btn-sm">${sold ? 'Ähnliches anfragen' : 'Kaufen anfragen'}</a>
+        </div>
+      </div>`;
+    el.querySelector('a').addEventListener('click', () => {
+      selectType(sold ? (w.kategorie && $$('#typeOptions input').some(r => r.value === w.kategorie) ? w.kategorie : 'Etwas anderes') : 'Fertiges Werk kaufen');
+      $('#f-ref').value = sold ? `Ähnlich wie „${w.titel}“` : `${w.titel}${hasPrice ? ' (' + euro.format(w.preis) + ')' : ''}`;
+      if(!sold && !$('#f-msg').value) $('#f-msg').value = `Ich interessiere mich für das Werk „${w.titel}“.`;
     });
-    sorted.forEach(c => grid.appendChild(c));
+    return el;
   }
-  tabs.forEach(t => t.addEventListener('click', () => {
-    tabs.forEach(x => x.classList.remove('active'));
-    t.classList.add('active');
-    currentFilter = t.dataset.filter;
-    applyFilter();
-  }));
-  sortSel.addEventListener('change', applySort);
-  $$('.view-btn').forEach(b => b.addEventListener('click', () => {
-    $$('.view-btn').forEach(x => x.classList.remove('active'));
-    b.classList.add('active');
-    grid.dataset.view = b.dataset.view;
-  }));
 
-  /* Merkliste */
-  $$('.wishlist-btn').forEach(b => b.addEventListener('click', () => {
-    const on = b.classList.toggle('on');
-    b.setAttribute('aria-pressed', on);
-  }));
+  function renderWorks(){
+    if(!works.length){ empty.hidden = false; tabsEl.hidden = true; return; }
+    works.forEach(w => grid.appendChild(card(w)));
+    const cats = [...new Set(works.map(w => w.kategorie).filter(Boolean))];
+    if(cats.length > 1){
+      ['Alle', ...cats].forEach((c, i) => {
+        const b = document.createElement('button');
+        b.type = 'button'; b.className = 'filter-tab' + (i === 0 ? ' active' : '');
+        b.textContent = c; b.setAttribute('aria-pressed', i === 0);
+        b.addEventListener('click', () => {
+          $$('.filter-tab', tabsEl).forEach(x => { x.classList.remove('active'); x.setAttribute('aria-pressed', false); });
+          b.classList.add('active'); b.setAttribute('aria-pressed', true);
+          $$('.work', grid).forEach(el => { el.hidden = !(i === 0 || el.dataset.cat === c); });
+        });
+        tabsEl.appendChild(b);
+      });
+    } else tabsEl.hidden = true;
+    observeReveal(grid);
+  }
+  renderWorks();
 
-  /* Motiv-Anfrage: Feld vorausfüllen */
-  $$('[data-request]').forEach(a => a.addEventListener('click', () => {
-    const card = a.closest('.art-card');
-    $('#verse').value = card ? card.dataset.title : '';
-  }));
-
-  /* Formular */
+  /* ---------- Formular ---------- */
   const form = $('#requestForm');
+  const fileInput = $('#f-file'), fileList = $('#fileList'), dz = $('#dropzone');
+  fileInput.addEventListener('change', () => {
+    const files = Array.from(fileInput.files).slice(0, 5);
+    fileList.textContent = files.length ? files.map(f => f.name).join(', ') : '';
+  });
+  ['dragenter','dragover'].forEach(ev => dz.addEventListener(ev, () => dz.classList.add('drag')));
+  ['dragleave','drop'].forEach(ev => dz.addEventListener(ev, () => dz.classList.remove('drag')));
+
+  const fields = $$('.field input[required], .field textarea[required]', form);
+  const validate = input => {
+    const ok = input.checkValidity();
+    input.closest('.field').classList.toggle('invalid', !ok);
+    return ok;
+  };
+  fields.forEach(input => {
+    input.addEventListener('blur', () => { if(input.value) validate(input); });
+    input.addEventListener('input', () => { if(input.closest('.field').classList.contains('invalid')) validate(input); });
+  });
+  $$('#typeOptions input').forEach(r => r.addEventListener('change', () => $('#typeError').classList.remove('show')));
+  $('#f-consent').addEventListener('change', () => $('#consentError').classList.remove('show'));
+
   form.addEventListener('submit', e => {
     e.preventDefault();
-    if(form.website && form.website.value) return;      // Honeypot
-    if(!form.checkValidity()){ form.reportValidity(); return; }
-    /* TODO: Hier die Daten an dein Backend / einen Formular-Dienst senden (fetch/POST). */
+    if(form.website.value) return; // Honeypot
+    const typeOk = !!form.querySelector('input[name="art"]:checked');
+    $('#typeError').classList.toggle('show', !typeOk);
+    const results = fields.map(validate);
+    const consentOk = $('#f-consent').checked;
+    $('#consentError').classList.toggle('show', !consentOk);
+    if(!typeOk){ $('#typeOptions input').focus(); return; }
+    const firstBad = fields[results.indexOf(false)];
+    if(firstBad){ firstBad.focus(); return; }
+    if(!consentOk){ $('#f-consent').focus(); return; }
+
+    /* TODO: Daten an einen Formular-Dienst / dein Backend senden (z. B. fetch POST mit FormData). */
     $('#formFields').style.display = 'none';
     $('#formSuccess').classList.add('show');
+    $('#anfrage').scrollIntoView({behavior:'smooth', block:'start'});
   });
 
   $('#year').textContent = new Date().getFullYear();
