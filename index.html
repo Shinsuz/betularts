@@ -194,7 +194,33 @@ nav{display:flex;align-items:center;justify-content:space-between;gap:24px;width
 .nav-overlay.show{opacity:1;visibility:visible;}
 
 /* ---------- Hero ---------- */
-.hero{padding:calc(var(--header-h) + 56px) 0 88px;position:relative;}
+.hero{padding:calc(var(--header-h) + 56px) 0 88px;position:relative;overflow-x:clip;}
+
+/* Papierflieger */
+.plane{
+  position:absolute;left:0;top:0;z-index:6;
+  width:52px;height:52px;margin:-26px 0 0 -26px;
+  opacity:0;cursor:pointer;border-radius:50%;
+  -webkit-tap-highlight-color:transparent;
+  filter:drop-shadow(0 6px 6px rgba(28,26,23,.22));
+}
+.plane.ready{opacity:1;}
+.plane svg{width:100%;height:100%;overflow:visible;}
+.plane .bob{transform-origin:50% 50%;}
+.plane.resting .bob{animation:planeBob 2.8s ease-in-out infinite;}
+@keyframes planeBob{0%,100%{transform:translateY(0) rotate(0);}50%{transform:translateY(-4px) rotate(-3deg);}}
+.plane-trail{
+  position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:5;
+  transition:opacity 1.2s var(--ease);
+}
+.plane-trail path{fill:none;stroke:var(--accent);stroke-width:1.6;stroke-dasharray:3 7;stroke-linecap:round;opacity:.55;}
+.plane-trail.fade{opacity:0;}
+.plane-hint{
+  position:absolute;z-index:6;pointer-events:none;
+  font-family:'Fraunces',serif;font-style:italic;font-size:.85rem;color:var(--ink-soft);white-space:nowrap;
+  opacity:0;transform:translateY(4px);transition:opacity .4s var(--ease),transform .4s var(--ease);
+}
+.plane-hint.show{opacity:1;transform:none;}
 .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center;}
 .hero h1{font-size:clamp(2.6rem,6.2vw,4.8rem);margin-bottom:24px;}
 .hero h1 em{font-style:italic;color:var(--accent);font-weight:400;}
@@ -601,9 +627,9 @@ footer .logo{margin-bottom:16px;}
       </div>
     </div>
 
-    <div class="collage" aria-hidden="true">
+    <div class="collage" id="collage">
       <!-- Abstrakte Malerei -->
-      <div class="frame frame-1">
+      <div aria-hidden="true" class="frame frame-1">
         <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice">
           <rect width="400" height="500" fill="#efe4d2"/>
           <circle cx="250" cy="170" r="92" fill="#d9a441"/>
@@ -614,7 +640,7 @@ footer .logo{margin-bottom:16px;}
         <span class="frame-tag">Gemälde</span>
       </div>
       <!-- Linienporträt -->
-      <div class="frame frame-2">
+      <div aria-hidden="true" class="frame frame-2">
         <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid slice">
           <rect width="300" height="300" fill="#f7efe6"/>
           <circle cx="150" cy="150" r="104" fill="#f4ddd0"/>
@@ -626,7 +652,7 @@ footer .logo{margin-bottom:16px;}
         <span class="frame-tag">Porträt</span>
       </div>
       <!-- Schrift / Pinselstrich -->
-      <div class="frame frame-3">
+      <div aria-hidden="true" class="frame frame-3">
         <svg viewBox="0 0 400 320" preserveAspectRatio="xMidYMid slice">
           <rect width="400" height="320" fill="#2f4766"/>
           <path d="M60 210 C90 120 130 90 150 120 C170 150 120 220 160 220 C200 220 210 110 240 110 C270 110 240 210 280 210 C310 210 330 150 345 130" fill="none" stroke="#f6f2ec" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
@@ -634,7 +660,21 @@ footer .logo{margin-bottom:16px;}
         </svg>
         <span class="frame-tag">Kalligrafie</span>
       </div>
-      <div class="hero-badge"><span><strong>1:1</strong>Unikat</span></div>
+      <div class="hero-badge" aria-hidden="true"><span><strong>1:1</strong>Unikat</span></div>
+
+      <!-- Papierflieger aus einem Brief: fliegt beim Laden eine Runde, danach per Hover/Tipp erneut -->
+      <svg class="plane-trail" id="planeTrail" aria-hidden="true"><path d=""/></svg>
+      <button class="plane" id="plane" type="button" aria-label="Papierflieger noch einmal fliegen lassen">
+        <svg viewBox="0 0 52 52" aria-hidden="true">
+          <g class="bob">
+            <path d="M3 17 L49 26 L19 28 Z" fill="#fffaf2" stroke="#1c1a17" stroke-width="1.3" stroke-linejoin="round"/>
+            <path d="M19 28 L49 26 L13 39 Z" fill="#efe3d0" stroke="#1c1a17" stroke-width="1.3" stroke-linejoin="round"/>
+            <path d="M19 28 L13 39 L22 31 Z" fill="#dccbb2" stroke="#1c1a17" stroke-width="1.1" stroke-linejoin="round"/>
+            <path d="M12 20.5 L27 23.4 M11 23.2 L22 25.3" stroke="#c4552d" stroke-width="1.1" stroke-linecap="round"/>
+          </g>
+        </svg>
+      </button>
+      <span class="plane-hint" id="planeHint" aria-hidden="true">nochmal?</span>
     </div>
   </div>
 </section>
@@ -921,6 +961,97 @@ footer .logo{margin-bottom:16px;}
   });
   sysDark.addEventListener('change', () => { if(!root.dataset.theme) applyTheme(); });
   applyTheme();
+
+  /* Papierflieger: steigt auf, dreht eine Runde um die Bilder und landet auf dem Gemälde */
+  (function(){
+    const collage = $('#collage'), plane = $('#plane'), trail = $('#planeTrail'), hint = $('#planeHint');
+    const trailPath = $('path', trail);
+    // Flugroute in Prozent der Collage (x, y) als kubische Kurven – darf über den Rand hinausgehen
+    const route = [
+      [[-34,112],[-14,84],[2,44],[24,22]],
+      [[24,22],[40,6],[68,-12],[86,4]],
+      [[86,4],[104,20],[106,52],[92,68]],
+      [[92,68],[76,84],[50,98],[30,86]],
+      [[30,86],[2,74],[-4,32],[16,12]],
+      [[16,12],[24,4],[32,1],[42,1]]
+    ];
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const canHover = window.matchMedia('(hover: hover)').matches;
+    let samples = [], flying = false, landed = false, hinted = false;
+
+    const bez = (a,b,c,d,t) => { const u = 1 - t; return u*u*u*a + 3*u*u*t*b + 3*u*t*t*c + t*t*t*d; };
+    function build(){
+      const W = collage.clientWidth, H = collage.clientHeight;
+      samples = []; let prev = null, len = 0;
+      route.forEach(([p0,p1,p2,p3], si) => {
+        for(let i = si ? 1 : 0; i <= 60; i++){
+          const t = i / 60;
+          const x = bez(p0[0],p1[0],p2[0],p3[0],t) / 100 * W;
+          const y = bez(p0[1],p1[1],p2[1],p3[1],t) / 100 * H;
+          if(prev) len += Math.hypot(x - prev.x, y - prev.y);
+          prev = {x, y, len}; samples.push(prev);
+        }
+      });
+    }
+    function at(d){
+      let lo = 0, hi = samples.length - 1;
+      while(lo < hi){ const m = (lo + hi) >> 1; if(samples[m].len < d) lo = m + 1; else hi = m; }
+      const s = samples[lo], p = samples[Math.max(0, lo - 2)], n = samples[Math.min(samples.length - 1, lo + 2)];
+      return {x: s.x, y: s.y, a: Math.atan2(n.y - p.y, n.x - p.x) * 180 / Math.PI};
+    }
+    const place = pt => { plane.style.transform = `translate(${pt.x}px,${pt.y}px) rotate(${pt.a}deg)`; };
+    const ease = t => -(Math.cos(Math.PI * t) - 1) / 2;
+
+    function rest(){
+      build();
+      const end = at(samples[samples.length - 1].len);
+      place(end);
+      hint.style.left = (end.x + 30) + 'px';
+      hint.style.top = (end.y - 34) + 'px';
+    }
+    function land(){
+      flying = false; landed = true;
+      plane.classList.add('resting');
+      trail.classList.add('fade');
+      rest();
+      if(!hinted){
+        hinted = true;
+        hint.classList.add('show');
+        setTimeout(() => hint.classList.remove('show'), 3200);
+      }
+    }
+    function fly(){
+      if(flying || reduce) return;
+      flying = true; landed = false;
+      build();
+      plane.classList.remove('resting');
+      plane.classList.add('ready');
+      hint.classList.remove('show');
+      trail.classList.remove('fade');
+      const total = samples[samples.length - 1].len;
+      const dur = Math.min(5200, Math.max(3600, total * 2.6));
+      const pts = []; let start = null;
+      function frame(ts){
+        if(start === null) start = ts;
+        const k = Math.min(1, (ts - start) / dur);
+        const pt = at(ease(k) * total);
+        place(pt);
+        pts.push(pt.x.toFixed(1) + ' ' + pt.y.toFixed(1));
+        trailPath.setAttribute('d', 'M' + pts.join(' L'));
+        if(k < 1) requestAnimationFrame(frame); else land();
+      }
+      requestAnimationFrame(frame);
+    }
+
+    if(reduce){ rest(); plane.classList.add('ready', 'resting'); landed = true; return; }
+    plane.addEventListener('click', fly);
+    if(canHover) plane.addEventListener('mouseenter', () => { if(landed) fly(); });
+    window.addEventListener('resize', () => { if(landed) rest(); });
+    const startIO = new IntersectionObserver(entries => {
+      if(entries[0].isIntersecting){ startIO.disconnect(); setTimeout(fly, 700); }
+    }, {threshold: .35});
+    startIO.observe(collage);
+  })();
 
   /* Mobile Menü */
   const burger = $('#burger'), navLinks = $('#navLinks'), overlay = $('#navOverlay');
